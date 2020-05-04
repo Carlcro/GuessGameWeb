@@ -1,12 +1,21 @@
-@import './button.css';
+@import "./button.css";
+@import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background: #232946;
+  font-family: "Jost", sans-serif;
+}
+
+body {
+  color: #b8c1ec;
+}
+
 .hero {
   width: 100%;
-  color: #333;
 }
 
 .title {
