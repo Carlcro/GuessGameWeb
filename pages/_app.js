@@ -1,18 +1,26 @@
 import "../styles/index.css";
 import React, { useEffect, useState } from "react";
-import { firebase } from "../firebase/index";
+import { firebase, auth } from "../firebase/index";
+import { useRouter } from "next/router";
 
 export const AuthContext = React.createContext(null);
 
 function MyApp({ Component, pageProps }) {
+  const [authUser, setAuthUser] = useState(null);
   const [user, setUser] = useState(null);
 
+  const router = useRouter();
+
   function onAuthStateChanged(result) {
-    if (result) {
+    setAuthUser(result);
+  }
+
+  useEffect(() => {
+    if (authUser) {
       return firebase
         .firestore()
         .collection("users")
-        .doc(result.uid)
+        .doc(authUser.uid)
         .onSnapshot((querySnapshot) => {
           const {
             name,
@@ -34,7 +42,8 @@ function MyApp({ Component, pageProps }) {
           );
         });
     }
-  }
+  }, [authUser]);
+
   useEffect(() => {
     const authSubscriber = firebase
       .auth()
@@ -44,8 +53,13 @@ function MyApp({ Component, pageProps }) {
     return authSubscriber;
   }, []);
 
+  const logout = () => {
+    auth.signOut();
+    router.push("/");
+  };
+
   return (
-    <AuthContext.Provider value={user}>
+    <AuthContext.Provider value={{ user, logout }}>
       <Component {...pageProps} />
     </AuthContext.Provider>
   );

@@ -4,15 +4,17 @@ export default function IndexPage() {
   return (
     <div>
       <section>
-        <div id="container" className="mx-10">
+        <div id="container" className="h-screen px-8">
           <div
             id="header"
             className="text-headline flex justify-end text-xl my-3"
           >
-            <Link href="/login">Login</Link>
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
           </div>
-          <div className="flex justify-center content-center my-40 items-center">
-            <div className="w-full lg:w-4/5 flex flex-col lg:flex-row">
+          <div className="flex justify-center content-center  items-center">
+            <div className="w-full lg:w-4/5 flex flex-col sm:flex-row">
               <div>
                 <h1 className="text-headline text-5xl">
                   Welcome to Mind Merge!
@@ -23,7 +25,7 @@ export default function IndexPage() {
                   🚀!
                 </h2>
               </div>
-              <div className="flex flex-col h-full w-3/5 lg:w-4/5 bg-paragraph rounded p-3">
+              <div className="flex flex-col h-full mt-5 bg-paragraph rounded p-3">
                 <div className="flex flex-col">
                   <form className="flex flex-col text-stroke">
                     <input

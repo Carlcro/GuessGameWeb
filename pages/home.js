@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./_app";
-import { firebase, auth } from "../firebase/index";
+import { firebase } from "../firebase/index";
 import Link from "next/link";
-import Router from "next/router";
 
 export default function Home() {
-  const user = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -30,11 +29,6 @@ export default function Home() {
         });
     }
   }, [user]);
-
-  const logout = () => {
-    auth.signOut();
-    Router.push("/");
-  };
 
   if (!user) {
     return <div></div>;
