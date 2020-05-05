@@ -31,20 +31,17 @@ export default function NewGame() {
     router.push(`/games/[gameId]`, `/games/${gameId.id}`);
   };
 
-  if (!user) {
-    return <div></div>;
-  }
-
   return (
     <div>
       <div className="flex flex-col items-center h-screen">
         <h1 className="text-4xl text-headline">New Game</h1>
         <div className="flex flex-col justify-center flex-1">
-          {user.friends.map((friend) => (
-            <Button key={friend.userId} onClick={() => startNewGame(friend)}>
-              {friend.name}
-            </Button>
-          ))}
+          {user &&
+            user.friends.map((friend) => (
+              <Button key={friend.userId} onClick={() => startNewGame(friend)}>
+                {friend.name}
+              </Button>
+            ))}
         </div>
       </div>
     </div>

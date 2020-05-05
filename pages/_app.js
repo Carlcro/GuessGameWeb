@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (authUser) {
+      router.push("/home");
       return firebase
         .firestore()
         .collection("users")
@@ -41,8 +42,6 @@ function MyApp({ Component, pageProps }) {
               })
           );
         });
-    } else {
-      setAuthUser(null);
     }
   }, [authUser]);
 

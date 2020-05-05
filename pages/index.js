@@ -49,12 +49,6 @@ export default function IndexPage() {
     });
   };
 
-  /* useEffect(() => {
-    if (user) {
-      router.replace("/home");
-    }
-  }, [user]); */
-
   return (
     <div>
       <section>
@@ -63,15 +57,9 @@ export default function IndexPage() {
             id="header"
             className="text-headline flex justify-end text-xl my-3"
           >
-            {user ? (
-              <Link href="/home">
-                <a>Home</a>
-              </Link>
-            ) : (
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            )}
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
           </div>
           <div className="flex justify-center content-center  items-center">
             <div className="w-full lg:w-4/5 flex flex-col sm:flex-row">
