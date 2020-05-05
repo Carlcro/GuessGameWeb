@@ -13,6 +13,11 @@ function MyApp({ Component, pageProps }) {
 
   function onAuthStateChanged(result) {
     setAuthUser(result);
+    if (result) {
+      router.push("/home");
+    } else {
+      router.push("/");
+    }
   }
 
   useEffect(() => {

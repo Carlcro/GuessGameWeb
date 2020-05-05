@@ -18,6 +18,7 @@ export default function IndexPage() {
               <div>
                 <h1 className="text-headline text-5xl">
                   Welcome to Mind Merge!
+                  {process.env.FIREBASE_PROJECT_ID}
                 </h1>
                 <h2 className="text-paragraph text-3xl md:w-3/5">
                   The game where you work together to merge your brains 🤯. Join
