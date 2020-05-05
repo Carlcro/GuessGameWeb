@@ -7,7 +7,7 @@ import { AuthContext } from "../_app";
 import Link from "next/link";
 
 export default function GameScreen() {
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const router = useRouter();
   const { gameId } = router.query;
@@ -98,6 +98,7 @@ export default function GameScreen() {
       },
       { merge: true }
     );
+    setGameFinished(true);
   };
 
   const isSameWord = (currentGuesses) => {
@@ -129,10 +130,24 @@ export default function GameScreen() {
 
   return (
     <div className="flex flex-col items-center h-screen py-8 justify-between">
-      <div className="w-full">
-        <Link href="/home">
-          <a className="ml-5">{"< Home"}</a>
-        </Link>
+      <div className="max-w-md w-full">
+        <div className="flex justify-between">
+          <Link href="/home">
+            <a className="ml-5">{"< Home"}</a>
+          </Link>
+
+          {!gameFinished ? (
+            <button
+              onClick={endGame}
+              className="bg-button text-buttonText text-center py-1 px-3 mr-4  
+          rounded"
+            >
+              End
+            </button>
+          ) : (
+            <div></div>
+          )}
+        </div>
         <div className="flex justify-around my-3 text-headline text-xl">
           <div>{players.player1.name}</div>
           <div>{players.player2.name}</div>
@@ -145,22 +160,26 @@ export default function GameScreen() {
               <div>{guess.player2}</div>
             </div>
           ))}
-        <div className="flex bg-paragraph text-stroke mx-10 rounded py-2 px-10 justify-between mt-3">
+        <div className="flex items-center bg-paragraph text-stroke mx-10 h-10 rounded py-1 px-10 justify-between mt-3">
           <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
           <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <input
-          onChange={({ target }) => setText(target.value)}
-          type="text"
-          value={text}
-          className="mt-3 p-2 rounded text-stroke"
-        ></input>
-        <Button className="text-sm" onClick={handleGuess}>
-          {canGuess() ? "Guess" : "Waiting for other player..."}
-        </Button>
-      </div>
+      {!gameFinished ? (
+        <div className="flex flex-col">
+          <input
+            onChange={({ target }) => setText(target.value)}
+            type="text"
+            value={text}
+            className="mt-3 p-2 rounded text-stroke"
+          ></input>
+          <Button className="text-sm" onClick={handleGuess}>
+            {canGuess() ? "Guess" : "Waiting for other player..."}
+          </Button>
+        </div>
+      ) : (
+        <div>Finished</div>
+      )}
     </div>
   );
 }
