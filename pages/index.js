@@ -9,9 +9,6 @@ export default function IndexPage() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [name, setName] = useState("");
-
-  const { user } = useContext(AuthContext);
-
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -24,7 +21,7 @@ export default function IndexPage() {
       return;
     }
 
-    if (password === rePassword) {
+    if (password != rePassword) {
       setError("Passwords do not match");
       return;
     }
