@@ -51,18 +51,12 @@ export default function Home() {
       </div>
       <div className="flex flex-col">
         <Link href="/newGame" as="new-game">
-          <a
-            className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded"
-            type="button"
-          >
+          <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
             New Game
           </a>
         </Link>
         <Link href="/addFriends" as="add-friends">
-          <a
-            className="bg-button text-buttonText text-center  p-3 mt-3 w-48 rounded"
-            type="button"
-          >
+          <a className="bg-button text-buttonText text-center  p-3 mt-3 w-48 rounded">
             Add Friends
           </a>
         </Link>
