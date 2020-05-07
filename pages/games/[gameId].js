@@ -7,6 +7,7 @@ import { AuthContext } from "../_app";
 import Link from "next/link";
 import Spinner from "../../components/spinner";
 import EmojiControl from "../../components/emojiControll";
+import produce from "immer";
 
 export default function GameScreen() {
   const { user } = useContext(AuthContext);
@@ -34,12 +35,12 @@ export default function GameScreen() {
 
   const isPlayer1 = () => players.player1.userId === user.userId;
 
-  const canGuess = () => {
+  const hasGuessed = () => {
     if (guesses[round - 1]) {
       if (isPlayer1()) {
-        return guesses[round - 1].player1 === "";
+        return guesses[round - 1].player1 != "";
       }
-      return guesses[round - 1].player2 === "";
+      return guesses[round - 1].player2 != "";
     }
   };
 
@@ -173,22 +174,27 @@ export default function GameScreen() {
     selectedPlayer,
     reaction
   ) => {
-    const currentGuesses = [...guesses];
+    const newGuesses = produce(guesses, (draftState) => {
+      if (isPlayer1()) {
+        draftState[selectedRound - 1].reactions = {
+          ...draftState[selectedRound - 1].reactions,
+          [selectedPlayer]: { player1: reaction },
+        };
+      } else {
+        draftState[selectedRound - 1].reactions = {
+          ...draftState[selectedRound - 1].reactions,
+          [selectedPlayer]: { player2: reaction },
+        };
+      }
+    });
 
-    if (isPlayer1()) {
-      currentGuesses[selectedRound - 1].reactions = {
-        [selectedPlayer]: { player1: reaction },
-      };
-    } else {
-      currentGuesses[selectedRound - 1].reactions = {
-        [selectedPlayer]: { player2: reaction },
-      };
-    }
+    setGuesses(newGuesses);
+
     setReactionPosition({ show: false, x: 0, y: 0 });
 
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
-        guesses: currentGuesses,
+        guesses: newGuesses,
       },
       { merge: true }
     );
@@ -259,16 +265,17 @@ export default function GameScreen() {
           </div>
         </div>
         {!gameFinished ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center">
             {friendHasAnswered() && <span>Friend has answered</span>}
+            {hasGuessed() && <span>Waiting for other player</span>}
             <input
               onChange={({ target }) => setText(target.value)}
               type="text"
               value={text}
-              className="mt-3 p-2 rounded text-stroke"
+              className="mt-3 p-2 rounded text-stroke w-48"
             ></input>
             <Button className="text-sm" onClick={handleGuess}>
-              {canGuess() ? "Guess" : "Waiting for other player..."}
+              Guess
             </Button>
           </div>
         ) : (

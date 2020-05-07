@@ -10,22 +10,28 @@ export default function EmojiControl({
 }) {
   if (!show) return <div></div>;
 
-  const Hej = (reaction) => {
+  const selectReaction = (reaction) => {
     onReactionSelected(selectedRound, selectedPlayer, reaction);
   };
 
   return (
     <div
       style={{ position: "absolute", left: xPos, top: yPos }}
-      className="bg-background bg-paragrah border-highlight border-2 border-solid px-3 py-2 flex"
+      className="bg-background bg-paragrah border-highlight border-2 border-solid px-3 py-2 flex text-lg cursor-pointer"
     >
-      <div onClick={() => Hej("😍")} className="mr-2">
+      <div onClick={() => selectReaction("😍")} className="mr-2">
         😍
       </div>
-      <div onClick={() => Hej("❤️")} className="mr-2">
-        ❤️
+      <div onClick={() => selectReaction("😂")} className="mr-2">
+        😂
       </div>
-      <div onClick={() => Hej("😡")}>😡</div>
+      <div onClick={() => selectReaction("😮")} className="mr-2">
+        😮
+      </div>
+      <div onClick={() => selectReaction("😡")}>😡</div>
+      <div className="ml-3" onClick={() => selectReaction("")}>
+        ❌
+      </div>
     </div>
   );
 }
