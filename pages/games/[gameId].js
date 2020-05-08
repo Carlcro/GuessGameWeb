@@ -201,7 +201,11 @@ export default function GameScreen() {
   };
 
   if (!user) {
-    return <div></div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner></Spinner>
+      </div>
+    );
   }
 
   return (
