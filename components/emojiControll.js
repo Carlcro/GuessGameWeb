@@ -17,7 +17,7 @@ export default function EmojiControl({
   return (
     <div
       style={{ position: "absolute", left: xPos, top: yPos }}
-      className="bg-background bg-paragrah border-highlight border-2 border-solid px-3 py-2 flex text-lg cursor-pointer"
+      className="bg-background  border-highlight border-2 border-solid px-3 py-2 flex text-lg cursor-pointer"
     >
       <div onClick={() => selectReaction("😍")} className="mr-2">
         😍
@@ -25,8 +25,8 @@ export default function EmojiControl({
       <div onClick={() => selectReaction("😂")} className="mr-2">
         😂
       </div>
-      <div onClick={() => selectReaction("😮")} className="mr-2">
-        😮
+      <div onClick={() => selectReaction("😱")} className="mr-2">
+        😱
       </div>
       <div onClick={() => selectReaction("😡")}>😡</div>
       <div className="ml-3" onClick={() => selectReaction("")}>

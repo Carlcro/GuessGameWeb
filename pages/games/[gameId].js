@@ -259,15 +259,19 @@ export default function GameScreen() {
                 </Guess>
               </div>
             ))}
-          <div className="flex items-center bg-paragraph text-stroke mx-10 h-10 rounded py-1 px-10 justify-between mt-3">
+          <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10  py-1 px-10 justify-between mt-3">
             <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
             <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
           </div>
         </div>
         {!gameFinished ? (
           <div className="flex flex-col items-center">
-            {friendHasAnswered() && <span>Friend has answered</span>}
-            {hasGuessed() && <span>Waiting for other player</span>}
+            {friendHasAnswered() && <span>Other player has answered</span>}
+            {hasGuessed() && (
+              <span>
+                Waiting for other player, you can still change you answer
+              </span>
+            )}
             <input
               onChange={({ target }) => setText(target.value)}
               type="text"
