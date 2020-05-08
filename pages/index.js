@@ -80,7 +80,7 @@ export default function IndexPage() {
                       onChange={({ target }) => setEmail(target.value)}
                     ></input>
                     <input
-                      placeholder="Name"
+                      placeholder="First Name"
                       className="mt-3 p-2 rounded"
                       type="text"
                       onChange={({ target }) => setName(target.value)}
