@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import { firebase } from "../firebase/index";
 import { useRouter } from "next/router";
-import { AuthContext } from "./_app";
+import Head from "next/head";
 
 export default function IndexPage() {
   const [email, setEmail] = useState("");
@@ -48,6 +48,10 @@ export default function IndexPage() {
 
   return (
     <div>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>Mind Merge - Merge your brains!</title>
+      </Head>
       <section>
         <div id="container" className="h-screen px-8">
           <div

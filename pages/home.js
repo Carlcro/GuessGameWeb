@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./_app";
 import { firebase } from "../firebase/index";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
@@ -32,6 +33,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-between items-center py-8 h-screen">
+      <Head>
+        <title>Home</title>
+      </Head>
       <div className="text-3xl text-headline">Home</div>
       <div>
         <div className="text-center">Games in progress</div>
