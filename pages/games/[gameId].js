@@ -269,7 +269,7 @@ export default function GameScreen() {
           </div>
         </div>
         {!gameFinished ? (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center px-8">
             {friendHasAnswered() && <span>Other player has answered</span>}
             {hasGuessed() && (
               <span>
