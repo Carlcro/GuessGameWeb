@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../_app";
 import { firebase } from "../../firebase/index";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function History() {
   const { user } = useContext(AuthContext);
