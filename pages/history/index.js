@@ -49,6 +49,9 @@ export default function History() {
 
   return (
     <div className="flex flex-col items-center py-8 h-screen">
+      <Head>
+        <title>History</title>
+      </Head>
       <h1 className="text-3xl text-headline">History</h1>
 
       {games.map((game) => (
