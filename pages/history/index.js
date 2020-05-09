@@ -7,6 +7,14 @@ export default function History() {
   const { user } = useContext(AuthContext);
   const [games, setGames] = useState([]);
 
+  const getLastWord = (guesses) => {
+    if (guesses.slice(-2)[0].player1 === guesses.slice(-2)[0].player2) {
+      return guesses.slice(-2)[0].player1;
+    } else {
+      return `${guesses.slice(-2)[0].player1}/${guesses.slice(-2)[0].player2}`;
+    }
+  };
+
   useEffect(() => {
     if (user) {
       firebase
@@ -19,18 +27,21 @@ export default function History() {
         .then((data) => {
           const list = [];
           data.forEach((doc) => {
-            const { players, finishedAt } = doc.data();
+            const { players, finishedAt, guesses } = doc.data();
 
             const opponentName =
               players.player1.userId === user.userId
                 ? players.player2.name
                 : players.player1.name;
+
             list.push({
               gameId: doc.id,
               opponentName,
+              title: getLastWord(guesses),
               finishedAt: finishedAt ? finishedAt.toDate().toDateString() : "",
             });
           });
+
           setGames(list);
         });
     }
@@ -42,14 +53,13 @@ export default function History() {
 
       {games.map((game) => (
         <div className="flex">
-          <span className="mt-6 mr-4">{game.finishedAt}</span>
           <Link
             href="/history/[gameId]"
             as={`/history/${game.gameId}`}
             key={game.gameId}
           >
             <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-              {game.opponentName}
+              {game.title}
             </a>
           </Link>
         </div>
