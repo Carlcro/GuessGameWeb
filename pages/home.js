@@ -3,10 +3,21 @@ import { AuthContext } from "./_app";
 import { firebase } from "../firebase/index";
 import Link from "next/link";
 import Head from "next/head";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
   const [games, setGames] = useState([]);
+
+  const getCanGuess = (guesses, round, isPlayer1) => {
+    if (isPlayer1) {
+      return guesses[round - 1].player1 === "";
+    }
+    return guesses[round - 1].player2 === "";
+  };
+
+  const getIsPlayer1 = (players) => players.player1.userId === user.userId;
 
   useEffect(() => {
     if (user) {
@@ -18,13 +29,16 @@ export default function Home() {
         .onSnapshot((querySnapshot) => {
           const list = [];
           querySnapshot.forEach((doc) => {
-            const { players } = doc.data();
+            const { players, guesses, round } = doc.data();
 
-            const opponentName =
-              players.player1.userId === user.userId
-                ? players.player2.name
-                : players.player1.name;
-            list.push({ gameId: doc.id, opponentName });
+            const isPlayer1 = getIsPlayer1(players);
+
+            const canGuess = getCanGuess(guesses, round, isPlayer1);
+
+            const opponentName = isPlayer1
+              ? players.player2.name
+              : players.player1.name;
+            list.push({ gameId: doc.id, opponentName, canGuess });
           });
           setGames(list);
         });
@@ -47,7 +61,12 @@ export default function Home() {
               key={game.gameId}
             >
               <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-                {game.opponentName}
+                <div className="flex">
+                  <div className="flex-1">{`${game.opponentName}`}</div>
+                  {game.canGuess && (
+                    <FontAwesomeIcon size="xs" icon={faCircle} />
+                  )}
+                </div>
               </a>
             </Link>
           ))}
