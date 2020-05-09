@@ -43,6 +43,7 @@ export default function IndexPage() {
       name: name,
       friends: [],
       friendRequests: [],
+      created: firebase.firestore.FieldValue.serverTimestamp(),
     });
   };
 

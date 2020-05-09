@@ -21,6 +21,7 @@ export default function NewGame() {
       guesses: [{ round: 1, player1: "", player2: "" }],
       round: 1,
       isFinished: false,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     const gameId = await firebase

@@ -36,7 +36,7 @@ export default function Home() {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="text-3xl text-headline">Home</div>
+      <h1 className="text-3xl text-headline">Home</h1>
       <div>
         <div className="text-center">Games in progress</div>
         <div className="flex flex-col">
@@ -54,6 +54,11 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col">
+        <Link href="/history">
+          <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
+            History
+          </a>
+        </Link>
         <Link href="/newGame" as="new-game">
           <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
             New Game

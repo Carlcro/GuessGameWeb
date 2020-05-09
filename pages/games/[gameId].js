@@ -104,6 +104,7 @@ export default function GameScreen() {
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
         isFinished: true,
+        finishedAt: firebase.firestore.FieldValue.serverTimestamp(),
       },
       { merge: true }
     );
