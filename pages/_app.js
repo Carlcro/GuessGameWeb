@@ -2,6 +2,12 @@ import "../styles/index.css";
 import React, { useEffect, useState } from "react";
 import { firebase, auth } from "../firebase/index";
 import { useRouter } from "next/router";
+import * as Sentry from "@sentry/browser";
+
+Sentry.init({
+  dsn:
+    "https://1c97145d29324ee1949710bc94a1075f@o390538.ingest.sentry.io/5234007",
+});
 
 export const AuthContext = React.createContext(null);
 
