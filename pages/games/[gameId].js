@@ -8,6 +8,7 @@ import Link from "next/link";
 import Spinner from "../../components/spinner";
 import EmojiControl from "../../components/emojiControll";
 import produce from "immer";
+import Head from "next/head";
 
 export default function GameScreen() {
   const { user } = useContext(AuthContext);
@@ -204,6 +205,9 @@ export default function GameScreen() {
   if (!user) {
     return (
       <div className="flex justify-center items-center h-screen">
+        <Head>
+          <title>Game</title>
+        </Head>
         <Spinner></Spinner>
       </div>
     );
@@ -211,6 +215,11 @@ export default function GameScreen() {
 
   return (
     <>
+      <Head>
+        <title>
+          {isPlayer1() ? players.player2.name : players.player1.name}
+        </title>
+      </Head>
       <EmojiControl
         onReactionSelected={handleReactionSelected}
         selectedPlayer={reactionPosition.selectedPlayer}
