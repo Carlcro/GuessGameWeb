@@ -9,6 +9,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
   const [games, setGames] = useState([]);
+  const [recentlyFinishedGames, setRecentlyFinishedGames] = useState([]);
 
   const getCanGuess = (guesses, round, isPlayer1) => {
     if (isPlayer1) {
@@ -45,6 +46,37 @@ export default function Home() {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user) {
+      return firebase
+        .firestore()
+        .collection("guessGames")
+        .where("playerIds", "array-contains", user.userId)
+        .where("isFinished", "==", true)
+        .onSnapshot((querySnapshot) => {
+          const list = [];
+          querySnapshot.forEach((doc) => {
+            const { players, finishedAt } = doc.data();
+
+            if (finishedAt) {
+              const isPlayer1 = getIsPlayer1(players);
+
+              const opponentName = isPlayer1
+                ? players.player2.name
+                : players.player1.name;
+              list.push({ gameId: doc.id, opponentName, finishedAt });
+            }
+          });
+
+          const topOne = list
+            .sort((a, b) => b.finishedAt.seconds - a.finishedAt.seconds)
+            .slice(0, 1);
+
+          setRecentlyFinishedGames(topOne);
+        });
+    }
+  }, [user]);
+
   return (
     <div className="flex flex-col justify-between items-center py-8 h-screen">
       <Head>
@@ -71,8 +103,29 @@ export default function Home() {
             </Link>
           ))}
         </div>
+        <div className="text-center mt-3">Recently finished games</div>
+        <div className="flex flex-col">
+          {recentlyFinishedGames.map((game) => (
+            <Link
+              href="/games/[gameId]"
+              as={`/games/${game.gameId}`}
+              key={game.gameId}
+            >
+              <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
+                <div className="flex">
+                  <div className="flex-1">{`${game.opponentName}`}</div>
+                </div>
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
       <div className="flex flex-col">
+        <Link href="/rules">
+          <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
+            Rules
+          </a>
+        </Link>
         <Link href="/history">
           <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
             History
