@@ -54,15 +54,7 @@ export default function IndexPage() {
         <title>Mind Merge - Merge your brains!</title>
       </Head>
       <section>
-        <div id="container" className="h-screen px-8">
-          <div
-            id="header"
-            className="text-headline flex justify-end text-xl my-3"
-          >
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
-          </div>
+        <div id="container" className="h-full px-8">
           <div className="flex justify-center content-center  items-center">
             <div className="w-full lg:w-4/5 flex flex-col sm:flex-row">
               <div>
