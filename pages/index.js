@@ -79,30 +79,35 @@ export default function IndexPage() {
                 <div className="flex flex-col">
                   <form className="flex flex-col text-stroke">
                     <input
+                      id="email"
                       placeholder="Email"
                       className="mt-3 p-2 rounded"
                       type="email"
                       onChange={({ target }) => setEmail(target.value)}
                     ></input>
                     <input
+                      id="name"
                       placeholder="First Name"
                       className="mt-3 p-2 rounded"
                       type="text"
                       onChange={({ target }) => setName(target.value)}
                     ></input>
                     <input
+                      id="password"
                       placeholder="Password"
                       className="mt-3 p-2 rounded"
                       type="password"
                       onChange={({ target }) => setPassword(target.value)}
                     ></input>
                     <input
+                      id="repeatPassword"
                       placeholder="Repeat Password"
                       className="mt-3 p-2 rounded"
                       type="password"
                       onChange={({ target }) => setRePassword(target.value)}
                     ></input>
                     <button
+                      id="submit"
                       className="bg-button text-buttonText p-3 mt-3 rounded"
                       type="submit"
                       onClick={handleSignUp}

@@ -29,6 +29,7 @@ export default function Login() {
           <div className="flex flex-col">
             <form className="flex flex-col text-stroke">
               <input
+                id="email"
                 placeholder="Email"
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
@@ -36,6 +37,7 @@ export default function Login() {
                 type="email"
               ></input>
               <input
+                id="password"
                 placeholder="Password"
                 onChange={({ target }) => setPassword(target.value)}
                 value={password}
