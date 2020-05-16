@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { firebase, auth } from "../firebase/index";
 import { useRouter } from "next/router";
 import * as Sentry from "@sentry/browser";
+import Nav from "../components/nav";
 
 Sentry.init({
   dsn:
@@ -48,6 +49,9 @@ function MyApp({ Component, pageProps }) {
               })
           );
         });
+    } else {
+      setUser(null);
+      router.push("/");
     }
   }, [authUser]);
 
@@ -60,14 +64,17 @@ function MyApp({ Component, pageProps }) {
     return authSubscriber;
   }, []);
 
-  const logout = () => {
-    auth.signOut();
+  const logout = async () => {
+    await auth.signOut();
     router.push("/");
   };
 
   return (
     <AuthContext.Provider value={{ user, logout }}>
-      <Component {...pageProps} />
+      <div className="flex flex-col min-h-screen ">
+        <Nav></Nav>
+        <Component {...pageProps} />
+      </div>
     </AuthContext.Provider>
   );
 }

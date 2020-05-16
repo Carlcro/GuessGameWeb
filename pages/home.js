@@ -78,7 +78,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className="flex flex-col justify-between items-center py-8 h-screen">
+    <div className="flex flex-col justify-between items-center py-8 flex-1">
       <Head>
         <title>Home</title>
       </Head>
@@ -129,41 +129,11 @@ export default function Home() {
         )}
       </div>
       <div className="flex flex-col">
-        <Link href="/rules">
-          <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
-            Rules
-          </a>
-        </Link>
-        <Link href="/history">
-          <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
-            History
-          </a>
-        </Link>
         <Link href="/newGame" as="new-game">
           <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
             New Game
           </a>
         </Link>
-        <Link href="/addFriends" as="add-friends">
-          <a className="bg-button text-buttonText text-center  p-3 mt-3 w-48 rounded">
-            Add Friends
-          </a>
-        </Link>
-        {user && user.friendRequests.length > 0 && (
-          <Link href="/friendRequests" as="friend-requests">
-            <a
-              className="bg-button text-buttonText text-center  p-3 mt-3 w-48 rounded"
-              type="button"
-            >{`Friend Requests (${user.friendRequests.length})`}</a>
-          </Link>
-        )}
-        <button
-          className="bg-button text-buttonText text-center  p-3 mt-3 w-48 rounded"
-          type="button"
-          onClick={logout}
-        >
-          Logout
-        </button>
       </div>
     </div>
   );

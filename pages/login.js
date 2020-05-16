@@ -19,11 +19,6 @@ export default function Login() {
   };
   return (
     <div className="h-screen">
-      <div className="pl-10 pt-5 text-lg">
-        <Link href="/">
-          <a>Back</a>
-        </Link>
-      </div>
       <div className="flex justify-center items-center h-full ">
         <div className="flex flex-col w-64 bg-paragraph rounded p-3">
           <div className="flex flex-col">
