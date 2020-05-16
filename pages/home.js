@@ -109,7 +109,7 @@ export default function Home() {
         )}
         {recentlyFinishedGames.length > 0 && (
           <div>
-            <div className="text-center mt-3">Recently finished games</div>
+            <div className="text-center mt-3">Recently finished game</div>
             <div className="flex flex-col">
               {recentlyFinishedGames.map((game) => (
                 <Link
@@ -130,7 +130,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col">
         <Link href="/newGame" as="new-game">
-          <a className="bg-button text-buttonText text-center p-3 mt-3 w-48 rounded">
+          <a className="bg-button text-buttonText text-center p-3 mt-3 mb-10 w-48 rounded">
             New Game
           </a>
         </Link>
