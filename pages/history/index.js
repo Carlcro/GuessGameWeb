@@ -49,7 +49,7 @@ export default function History() {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center py-8 h-screen">
+    <div className="flex flex-col items-center py-8 min-h-screen">
       <Head>
         <title>History</title>
       </Head>
