@@ -21,7 +21,7 @@ export default function Rules() {
           those.
         </p>
         <p className="mt-3">
-          The game continuous like this until both players write the same word.
+          The game continues like this until both players write the same word.
         </p>
         <p className="mt-3">
           If you feel that both players wrote the same word but with a slight
