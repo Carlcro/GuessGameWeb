@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { firebase } from "../firebase/index";
 import Router from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,6 +20,9 @@ export default function Login() {
   };
   return (
     <div className="h-screen">
+      <Head>
+        <title>Login</title>
+      </Head>
       <div className="flex justify-center items-center h-full ">
         <div className="flex flex-col w-64 bg-paragraph rounded p-3">
           <div className="flex flex-col">

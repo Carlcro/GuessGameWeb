@@ -130,7 +130,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col">
         <Link href="/newGame" as="new-game">
-          <a className="bg-button text-buttonText text-center p-3 mt-3 mb-10 w-48 rounded">
+          <a className="bg-button text-buttonText text-center p-3 mt-3 mb-12 w-48 rounded">
             New Game
           </a>
         </Link>

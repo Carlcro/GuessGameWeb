@@ -52,7 +52,7 @@ export default function Nav() {
           <div
             style={navbarOpen ? { top: 40, right: 1 } : {}}
             className={
-              "md:flex flex-grow justify-end items-center absolute md:static" +
+              "bg-background  md:flex flex-grow justify-end items-center absolute md:static" +
               (navbarOpen ? " flex" : " hidden")
             }
             id="example-navbar-danger"
