@@ -84,41 +84,49 @@ export default function Home() {
       </Head>
       <h1 className="text-3xl text-headline">Home</h1>
       <div>
-        <div className="text-center">Games in progress</div>
-        <div className="flex flex-col">
-          {games.map((game) => (
-            <Link
-              href="/games/[gameId]"
-              as={`/games/${game.gameId}`}
-              key={game.gameId}
-            >
-              <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-                <div className="flex">
-                  <div className="flex-1">{`${game.opponentName}`}</div>
-                  {game.canGuess && (
-                    <FontAwesomeIcon size="xs" icon={faCircle} />
-                  )}
-                </div>
-              </a>
-            </Link>
-          ))}
-        </div>
-        <div className="text-center mt-3">Recently finished games</div>
-        <div className="flex flex-col">
-          {recentlyFinishedGames.map((game) => (
-            <Link
-              href="/games/[gameId]"
-              as={`/games/${game.gameId}`}
-              key={game.gameId}
-            >
-              <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-                <div className="flex">
-                  <div className="flex-1">{`${game.opponentName}`}</div>
-                </div>
-              </a>
-            </Link>
-          ))}
-        </div>
+        {games.length > 0 && (
+          <div>
+            <div className="text-center">Games in progress</div>
+            <div className="flex flex-col">
+              {games.map((game) => (
+                <Link
+                  href="/games/[gameId]"
+                  as={`/games/${game.gameId}`}
+                  key={game.gameId}
+                >
+                  <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
+                    <div className="flex">
+                      <div className="flex-1">{`${game.opponentName}`}</div>
+                      {game.canGuess && (
+                        <FontAwesomeIcon size="xs" icon={faCircle} />
+                      )}
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+        {recentlyFinishedGames.length > 0 && (
+          <div>
+            <div className="text-center mt-3">Recently finished games</div>
+            <div className="flex flex-col">
+              {recentlyFinishedGames.map((game) => (
+                <Link
+                  href="/games/[gameId]"
+                  as={`/games/${game.gameId}`}
+                  key={game.gameId}
+                >
+                  <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
+                    <div className="flex">
+                      <div className="flex-1">{`${game.opponentName}`}</div>
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex flex-col">
         <Link href="/rules">
