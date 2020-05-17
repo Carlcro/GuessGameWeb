@@ -9,6 +9,8 @@ import Spinner from "../../components/spinner";
 import EmojiControl from "../../components/emojiControll";
 import produce from "immer";
 import Head from "next/head";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBrain } from "@fortawesome/free-solid-svg-icons";
 
 export default function GameScreen() {
   const { user } = useContext(AuthContext);
@@ -52,8 +54,6 @@ export default function GameScreen() {
       ...currentGuesses,
       { round: newRound, player1: "", player2: "" },
     ];
-    setRound(newRound);
-    setGuesses(guesses);
 
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
@@ -81,7 +81,6 @@ export default function GameScreen() {
     } else {
       currentGuesses[round - 1].player2 = guess;
     }
-    setGuesses(currentGuesses);
 
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
@@ -109,7 +108,6 @@ export default function GameScreen() {
       },
       { merge: true }
     );
-    setGameFinished(true);
   };
 
   const isSameWord = (currentGuesses) => {
@@ -190,8 +188,6 @@ export default function GameScreen() {
       }
     });
 
-    setGuesses(newGuesses);
-
     setReactionPosition({ show: false, x: 0, y: 0 });
 
     await firebase.firestore().collection("guessGames").doc(gameId).set(
@@ -230,11 +226,7 @@ export default function GameScreen() {
       ></EmojiControl>
       <div className="flex flex-col items-center h-screen py-8 justify-between">
         <div className="max-w-md w-full">
-          <div className="flex justify-between">
-            <Link href="/home">
-              <a className="ml-5">{"< Home"}</a>
-            </Link>
-
+          <div className="flex justify-end">
             {!gameFinished ? (
               <button
                 onClick={endGame}
@@ -247,6 +239,28 @@ export default function GameScreen() {
               <div></div>
             )}
           </div>
+          {gameFinished && (
+            <div
+              style={{
+                color: "#DABDD2",
+                position: "relative",
+                top: 38,
+                left: 206,
+              }}
+            >
+              <FontAwesomeIcon className="bigBrain" size="2x" icon={faBrain} />
+            </div>
+          )}
+          {gameFinished && (
+            <div className="flex justify-between my-3">
+              <div className="text-paragraph brainP1">
+                <FontAwesomeIcon size="lg" icon={faBrain} />
+              </div>
+              <div className="text-button brainP2 ">
+                <FontAwesomeIcon size="lg" icon={faBrain} />
+              </div>
+            </div>
+          )}
           <div className="flex justify-around my-3 text-headline text-xl">
             <div>{players.player1.name}</div>
             <div>{players.player2.name}</div>
@@ -279,11 +293,11 @@ export default function GameScreen() {
           </div>
         </div>
         {!gameFinished ? (
-          <div className="flex flex-col items-center px-8">
+          <div className="flex flex-col items-center px-8  mb-12">
             {friendHasAnswered() && <span>Other player has answered</span>}
             {hasGuessed() && (
               <span>
-                Waiting for other player, you can still change you answer
+                Waiting for other player, you can still change your answer
               </span>
             )}
             <input
