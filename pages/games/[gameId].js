@@ -240,28 +240,36 @@ export default function GameScreen() {
               <div></div>
             )}
           </div>
-          {
-            <div
-              style={{
-                color: "#DABDD2",
-                position: "relative",
-                top: 38,
-                left: 206,
-              }}
-            >
-              <img className="bigBrain" width={30} height={30} src={img}></img>
-            </div>
-          }
-          {
-            <div className="flex w-full justify-between my-3">
-              <div className="text-paragraph brainP1">
-                <FontAwesomeIcon size="lg" icon={faBrain} />
+          {gameFinished && (
+            <>
+              <div className="mindMerged w-full text-center mb-3 text-headline text-lg">
+                Mind Merged!
               </div>
-              <div className="text-button brainP2 ">
-                <FontAwesomeIcon size="lg" icon={faBrain} />
+              <div className="flex w-full relative mb-8">
+                <div className="text-paragraph">
+                  <FontAwesomeIcon
+                    className="brainP1"
+                    size="lg"
+                    icon={faBrain}
+                  />
+                </div>
+                <img
+                  className="bigBrain"
+                  width={30}
+                  height={30}
+                  src={img}
+                ></img>
+                <div className="text-button  ">
+                  <FontAwesomeIcon
+                    className="brainP2"
+                    size="lg"
+                    icon={faBrain}
+                  />
+                </div>
               </div>
-            </div>
-          }
+            </>
+          )}
+
           <div className="flex justify-around my-3 text-headline text-xl">
             <div>{players.player1.name}</div>
             <div>{players.player2.name}</div>

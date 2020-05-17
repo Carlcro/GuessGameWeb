@@ -88,7 +88,10 @@ body {
 }
 
 .brainP1 {
-  position: relative;
+  left: 0px;
+
+  position: absolute;
+
   animation: brainP1 2s forwards;
 }
 
@@ -102,19 +105,21 @@ body {
   }
 
   100% {
-    left: 47%;
+    left: 50%;
     opacity: 0;
   }
 }
 
 .brainP2 {
-  position: relative;
+  position: absolute;
+  left: 100%;
+
   animation: brainP2 2s forwards;
 }
 
 @keyframes brainP2 {
   0% {
-    left: 0px;
+    left: 100%;
   }
 
   55% {
@@ -122,16 +127,37 @@ body {
   }
 
   100% {
-    left: -47%;
+    left: 50%;
     opacity: 0;
   }
 }
 
 .bigBrain {
+  position: absolute;
+  left: 49%;
+  top: -2px;
   animation: bigBrain 2s forwards;
 }
 
 @keyframes bigBrain {
+  0% {
+    opacity: 0;
+  }
+
+  85% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100;
+  }
+}
+
+.mindMerged {
+  animation: mindMerged 2s forwards;
+}
+
+@keyframes mindMerged {
   0% {
     opacity: 0;
   }
