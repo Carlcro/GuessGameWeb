@@ -227,17 +227,15 @@ export default function GameScreen() {
       ></EmojiControl>
       <div className="flex flex-col min-w-full items-center h-screen py-8 justify-between">
         <div className="max-w-md w-full">
-          <div className="flex justify-end">
-            {!gameFinished ? (
+          <div className="flex justify-end mr-4">
+            {!gameFinished && (
               <button
                 onClick={endGame}
-                className="bg-button text-buttonText text-center py-1 px-3 mr-4  
+                className="bg-button text-buttonText text-center py-1 px-3   
           rounded"
               >
                 End
               </button>
-            ) : (
-              <div></div>
             )}
           </div>
           {gameFinished && (
@@ -302,7 +300,7 @@ export default function GameScreen() {
           </div>
         </div>
         {!gameFinished ? (
-          <div className="flex flex-col items-center px-8  mb-12">
+          <div className="flex flex-col items-center px-8 ">
             {friendHasAnswered() && <span>Other player has answered</span>}
             {hasGuessed() && (
               <span>
@@ -320,7 +318,7 @@ export default function GameScreen() {
             </Button>
           </div>
         ) : (
-          <div>Finished</div>
+          <div className="mb-12">Finished</div>
         )}
       </div>
     </>
