@@ -224,7 +224,7 @@ export default function GameScreen() {
         yPos={reactionPosition.y}
         xPos={reactionPosition.x}
       ></EmojiControl>
-      <div className="flex flex-col items-center h-screen py-8 justify-between">
+      <div className="flex flex-col min-w-full items-center h-screen py-8 justify-between">
         <div className="max-w-md w-full">
           <div className="flex justify-end">
             {!gameFinished ? (
@@ -239,7 +239,7 @@ export default function GameScreen() {
               <div></div>
             )}
           </div>
-          {gameFinished && (
+          {
             <div
               style={{
                 color: "#DABDD2",
@@ -250,9 +250,9 @@ export default function GameScreen() {
             >
               <FontAwesomeIcon className="bigBrain" size="2x" icon={faBrain} />
             </div>
-          )}
-          {gameFinished && (
-            <div className="flex justify-between my-3">
+          }
+          {
+            <div className="flex w-full justify-between my-3">
               <div className="text-paragraph brainP1">
                 <FontAwesomeIcon size="lg" icon={faBrain} />
               </div>
@@ -260,7 +260,7 @@ export default function GameScreen() {
                 <FontAwesomeIcon size="lg" icon={faBrain} />
               </div>
             </div>
-          )}
+          }
           <div className="flex justify-around my-3 text-headline text-xl">
             <div>{players.player1.name}</div>
             <div>{players.player2.name}</div>
