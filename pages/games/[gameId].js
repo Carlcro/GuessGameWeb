@@ -11,6 +11,7 @@ import produce from "immer";
 import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBrain } from "@fortawesome/free-solid-svg-icons";
+import img from "../../public/brain-solid-blue-pink.svg";
 
 export default function GameScreen() {
   const { user } = useContext(AuthContext);
@@ -248,7 +249,7 @@ export default function GameScreen() {
                 left: 206,
               }}
             >
-              <FontAwesomeIcon className="bigBrain" size="2x" icon={faBrain} />
+              <img className="bigBrain" width={30} height={30} src={img}></img>
             </div>
           }
           {

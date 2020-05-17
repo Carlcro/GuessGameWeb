@@ -89,7 +89,7 @@ body {
 
 .brainP1 {
   position: relative;
-  animation: brainP1 3s forwards;
+  animation: brainP1 2s forwards;
 }
 
 @keyframes brainP1 {
@@ -97,19 +97,19 @@ body {
     left: 0px;
   }
 
-  99% {
+  55% {
     opacity: 100;
   }
 
   100% {
-    left: 48%;
+    left: 47%;
     opacity: 0;
   }
 }
 
 .brainP2 {
   position: relative;
-  animation: brainP2 3s forwards;
+  animation: brainP2 2s forwards;
 }
 
 @keyframes brainP2 {
@@ -117,18 +117,18 @@ body {
     left: 0px;
   }
 
-  99% {
+  55% {
     opacity: 100;
   }
 
   100% {
-    left: -48%;
+    left: -47%;
     opacity: 0;
   }
 }
 
 .bigBrain {
-  animation: bigBrain 3s forwards;
+  animation: bigBrain 2s forwards;
 }
 
 @keyframes bigBrain {
