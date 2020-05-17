@@ -1,7 +1,8 @@
 /* next.config.js */
 const webpack = require("webpack");
+const withImages = require("next-images");
 require("dotenv").config();
-module.exports = {
+module.exports = withImages({
   webpack: (config) => {
     const env = Object.keys(process.env).reduce((acc, curr) => {
       acc[`process.env.${curr}`] = JSON.stringify(process.env[curr]);
@@ -10,4 +11,4 @@ module.exports = {
     config.plugins.push(new webpack.DefinePlugin(env));
     return config;
   },
-};
+});

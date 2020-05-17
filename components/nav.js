@@ -28,7 +28,7 @@ export default function Nav() {
           <div className="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start">
             <button
               onClick={() => handleRouteClick(user ? "/home" : "/")}
-              className="text-xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-white"
+              className="text-xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-white hover:opacity-75"
             >
               Mind Merge
             </button>
@@ -38,7 +38,7 @@ export default function Nav() {
                 type="button"
                 onClick={() => setNavbarOpen(!navbarOpen)}
               >
-                <FontAwesomeIcon size="xs" icon={faBars} />
+                <FontAwesomeIcon size="md" icon={faBars} />
               </button>
             ) : (
               <button
@@ -59,14 +59,6 @@ export default function Nav() {
           >
             {user ? (
               <ul className="flex flex-col md:flex-row list-none md:ml-auto">
-                <li className="nav-item">
-                  <button
-                    onClick={() => handleRouteClick("/history")}
-                    className="px-3 py-2 flex items-center text-md font-bold leading-snug text-white hover:opacity-75"
-                  >
-                    <span className="ml-2">History</span>
-                  </button>
-                </li>
                 <li className="nav-item">
                   <button
                     onClick={() => handleRouteClick("/rules")}
