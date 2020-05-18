@@ -1,9 +1,9 @@
 {
-  "name": "PWA App",
-  "short_name": "App",
+  "name": "Mind Merge",
+  "short_name": "Mind Merge",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/brain-solid-blue-pink.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
