@@ -60,11 +60,6 @@ export default function HistoryGame() {
     <>
       <div className="flex flex-col items-center h-screen py-8 justify-between">
         <div className="max-w-md w-full">
-          <div className="flex justify-between">
-            <Link href="/home">
-              <a className="ml-5">{"< Home"}</a>
-            </Link>
-          </div>
           <div className="flex justify-around my-3 text-headline text-xl">
             <div>{players.player1.name}</div>
             <div>{players.player2.name}</div>
