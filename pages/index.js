@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { firebase } from "../firebase/index";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -10,9 +10,9 @@ export default function IndexPage() {
   const [rePassword, setRePassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-
   const router = useRouter();
 
+  
   const handleSignUp = (event) => {
     event.preventDefault();
 
