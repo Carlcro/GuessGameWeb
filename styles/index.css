@@ -88,7 +88,7 @@ body {
 }
 
 .brainP1 {
-  left: 0px;
+  left: 7%;
 
   position: absolute;
 
@@ -96,10 +96,6 @@ body {
 }
 
 @keyframes brainP1 {
-  0% {
-    left: 0px;
-  }
-
   55% {
     opacity: 100;
   }
@@ -112,16 +108,12 @@ body {
 
 .brainP2 {
   position: absolute;
-  left: 100%;
+  left: 93%;
 
   animation: brainP2 2s forwards;
 }
 
 @keyframes brainP2 {
-  0% {
-    left: 100%;
-  }
-
   55% {
     opacity: 100;
   }

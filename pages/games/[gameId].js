@@ -20,6 +20,8 @@ export default function GameScreen() {
   const { gameId } = router.query;
 
   const [text, setText] = useState("");
+  const [gameInitialized, setGameInitialized] = useState(false);
+
   const [players, setPlayers] = useState({
     player1: { name: "", userId: "" },
     player2: { name: "", userId: "" },
@@ -138,6 +140,7 @@ export default function GameScreen() {
           setRound(round);
           setPlayers(players);
           setGameFinished(isFinished);
+          setGameInitialized(true);
         });
     }
   }, [gameId]);
@@ -211,6 +214,10 @@ export default function GameScreen() {
     );
   }
 
+  if (!gameInitialized) {
+    return <div></div>;
+  }
+
   return (
     <>
       <Head>
@@ -226,7 +233,7 @@ export default function GameScreen() {
         yPos={reactionPosition.y}
         xPos={reactionPosition.x}
       ></EmojiControl>
-      <div className="flex flex-col min-w-full items-center h-screen py-8 justify-between">
+      <div className="flex flex-col min-w-full items-center flex-1 py-8 justify-between">
         <div className="max-w-md w-full">
           <div className="flex justify-end mr-4">
             {!gameFinished && (
