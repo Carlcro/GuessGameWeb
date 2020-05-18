@@ -146,13 +146,14 @@ export default function GameScreen() {
     return (
       <div style={{ display: "flex" }}>
         <div
+          className="px-2"
           onClick={(event) =>
             handleReaction(selectedRound, selectedPlayer, event)
           }
         >
           {children}
         </div>
-        <div className="ml-2">
+        <div>
           <div>{reactions?.player1}</div>
           <div>{reactions?.player2}</div>
         </div>
@@ -297,7 +298,7 @@ export default function GameScreen() {
                 </Guess>
               </div>
             ))}
-          <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10  py-1 px-10 justify-between mt-3">
+          <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10 px-2 py-1 justify-between mt-3">
             <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
             <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
           </div>
