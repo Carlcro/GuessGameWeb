@@ -275,7 +275,10 @@ export default function GameScreen() {
           {guesses
             .filter((guess) => guess.round != round)
             .map((guess) => (
-              <div className="flex justify-between mt-1" key={guess.round}>
+              <div
+                className="flex justify-between mt-1 px-10 "
+                key={guess.round}
+              >
                 <Guess
                   reactions={guess.reactions?.player1}
                   selectedPlayer="player1"
