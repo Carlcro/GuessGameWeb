@@ -101,8 +101,8 @@ body {
   }
 
   100% {
-    left: 48%;
-    opacity: 0;
+    left: calc(50% - 12px);
+    opacity: 100;
   }
 }
 
@@ -119,14 +119,14 @@ body {
   }
 
   100% {
-    left: 48%;
-    opacity: 0;
+    left: calc(50% - 12px);
+    opacity: 100;
   }
 }
 
 .bigBrain {
   position: absolute;
-  left: 47%;
+  left: calc(50% - 15px);
   top: -2px;
   animation: bigBrain 2s forwards;
 }
@@ -141,7 +141,7 @@ body {
   }
 
   100% {
-    opacity: 100;
+    opacity: 50;
   }
 }
 
