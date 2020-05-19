@@ -31,7 +31,7 @@ export default function IndexPage() {
       .then((user) => {
         createUser(user);
       })
-      .then(() => router.push("/home"))
+      .then(() => router.replace("/home"))
       .catch((error) => setError(error.message));
   };
 
