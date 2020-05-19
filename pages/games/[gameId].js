@@ -12,6 +12,7 @@ import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBrain } from "@fortawesome/free-solid-svg-icons";
 import img from "../../public/brain-solid-blue-pink.svg";
+import levenshteinDistance from "../../utils/levenshteinDistance";
 
 export default function GameScreen() {
   const { user } = useContext(AuthContext);
@@ -32,6 +33,7 @@ export default function GameScreen() {
   ]);
   const [round, setRound] = useState(1);
   const [gameFinished, setGameFinished] = useState(false);
+  const [leven, setLeven] = useState(false);
 
   const [reactionPosition, setReactionPosition] = useState({
     show: false,
@@ -114,10 +116,14 @@ export default function GameScreen() {
   };
 
   const isSameWord = (currentGuesses) => {
-    return (
-      currentGuesses[round - 1].player1.toLowerCase() ===
+    const value = levenshteinDistance(
+      currentGuesses[round - 1].player1.toLowerCase(),
       currentGuesses[round - 1].player2.toLowerCase()
     );
+
+    setLeven(value > 0 && value < 3);
+
+    return value <= 2;
   };
 
   const friendHasAnswered = () => {
@@ -126,6 +132,17 @@ export default function GameScreen() {
     } else {
       return guesses[round - 1]?.player1.length != 0;
     }
+  };
+
+  const resumeFinishedGame = async () => {
+    setLeven(false);
+    await firebase.firestore().collection("guessGames").doc(gameId).set(
+      {
+        isFinished: false,
+        finishedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    );
   };
 
   useEffect(() => {
@@ -329,7 +346,12 @@ export default function GameScreen() {
             </Button>
           </div>
         ) : (
-          <div className="mb-12">Finished</div>
+          <div className="flex flex-col">
+            <div className="mb-12 text-center">Finished</div>
+            {leven && (
+              <Button onClick={resumeFinishedGame}>Not same word</Button>
+            )}
+          </div>
         )}
       </div>
     </>
