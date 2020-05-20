@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../pages/_app";
 import { useRouter } from "next/router";
 
@@ -38,7 +37,11 @@ export default function Nav() {
                 type="button"
                 onClick={() => setNavbarOpen(!navbarOpen)}
               >
-                <FontAwesomeIcon size="md" icon={faBars} />
+                {navbarOpen ? (
+                  <FontAwesomeIcon size="sm" icon={faTimes} />
+                ) : (
+                  <FontAwesomeIcon size="sm" icon={faBars} />
+                )}
               </button>
             ) : (
               <button
