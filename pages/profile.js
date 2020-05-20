@@ -46,7 +46,7 @@ export default function Profile() {
             <h2 className="text-2xl text-headline">Name</h2>
             <div className="text-xl">{user.name}</div>
           </div>
-          <div>
+          <div className="w-32">
             <h2 className="text-2xl text-headline">Friends</h2>
             <ul>
               {user.friends.map((friend) => (
