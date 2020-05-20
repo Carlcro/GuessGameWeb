@@ -8,6 +8,7 @@ module.exports = withPWA(
   withImages({
     pwa: {
       dest: "public",
+      disable: !process.env.production,
     },
     webpack: (config) => {
       const env = Object.keys(process.env).reduce((acc, curr) => {
