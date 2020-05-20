@@ -27,23 +27,26 @@ export default function Login() {
         <div className="flex flex-col w-64 bg-paragraph rounded p-3">
           <div className="flex flex-col">
             <form className="flex flex-col text-stroke">
+              <label className="mt-2" htmlFor="email">
+                Email
+              </label>
               <input
                 id="email"
-                placeholder="Email"
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
-                className="mt-3 p-2 rounded"
+                className="p-2 rounded"
                 type="email"
               ></input>
+              <label className="mt-2" htmlFor="password">
+                Password
+              </label>
               <input
                 id="password"
-                placeholder="Password"
                 onChange={({ target }) => setPassword(target.value)}
                 value={password}
-                className="mt-3 p-2 rounded"
+                className="p-2 rounded"
                 type="password"
               ></input>
-
               <button
                 onClick={handleLogin}
                 className="bg-button text-buttonText p-3 mt-3 rounded"
@@ -52,7 +55,14 @@ export default function Login() {
                 Login
               </button>
             </form>
-            <div className="text-buttonText mt-3">{error}</div>
+            <div className="flex flex-col mt-2">
+              <Link href="resetPassword" as={"reset-password"}>
+                <a className="text-stroke text-center hover:opacity-75">
+                  I forgot my password
+                </a>
+              </Link>
+              {error && <div className="text-buttonText mt-1">{error}</div>}
+            </div>
           </div>
         </div>
       </div>

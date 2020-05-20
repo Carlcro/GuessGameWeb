@@ -53,6 +53,7 @@ export default function AddFriends() {
           placeholder="Email"
           className="mt-3 p-2 rounded text-background w-48"
           type="email"
+          value={email}
           onChange={({ target }) => setEmail(target.value)}
         ></input>
         <Button disabled={requestSent} onClick={sendFriendsRequest}>
