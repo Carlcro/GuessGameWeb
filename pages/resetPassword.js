@@ -31,7 +31,6 @@ export default function ResetPassword() {
               </label>
               <input
                 id="email"
-                placeholder="Email"
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
                 className="mt-3 p-2 rounded"
