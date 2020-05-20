@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (authUser) {
-      router.push("/home");
+      router.replace("/home");
       return firebase
         .firestore()
         .collection("users")

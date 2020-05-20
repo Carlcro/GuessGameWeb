@@ -31,7 +31,7 @@ export default function IndexPage() {
       .then((user) => {
         createUser(user);
       })
-      .then(() => router.push("/home"))
+      .then(() => router.replace("/home"))
       .catch((error) => setError(error.message));
   };
 
@@ -69,14 +69,14 @@ export default function IndexPage() {
               <div className="flex flex-col h-full mt-5 bg-paragraph rounded p-3">
                 <div className="flex flex-col">
                   <form className="flex flex-col text-stroke">
-                    <label for="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
                       id="email"
                       className="p-2 rounded"
                       type="email"
                       onChange={({ target }) => setEmail(target.value)}
                     ></input>
-                    <label className="mt-2" for="name">
+                    <label className="mt-2" htmlFor="name">
                       First Name
                     </label>
                     <input
@@ -85,7 +85,7 @@ export default function IndexPage() {
                       type="text"
                       onChange={({ target }) => setName(target.value)}
                     ></input>
-                    <label className="mt-2" for="password">
+                    <label className="mt-2" htmlFor="password">
                       Password
                     </label>
                     <input
@@ -94,7 +94,7 @@ export default function IndexPage() {
                       type="password"
                       onChange={({ target }) => setPassword(target.value)}
                     ></input>
-                    <label className="mt-2" for="repeatPassword">
+                    <label className="mt-2" htmlFor="repeatPassword">
                       Repeat Password
                     </label>
                     <input
