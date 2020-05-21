@@ -76,7 +76,8 @@ export default function GameScreen() {
     return formatedGuess.charAt(0).toUpperCase() + formatedGuess.slice(1);
   };
 
-  const handleGuess = async () => {
+  const handleGuess = async (event) => {
+    event.preventDefault();
     setText("");
     inputEl.current.blur();
     const currentGuesses = [...guesses];
@@ -340,16 +341,20 @@ export default function GameScreen() {
                 Waiting for other player, you can still change your answer
               </span>
             )}
-            <input
-              onChange={({ target }) => setText(target.value)}
-              type="text"
-              value={text}
-              ref={inputEl}
-              className="mt-3 p-2 rounded text-stroke w-48"
-            ></input>
-            <Button className="text-sm" onClick={handleGuess}>
-              Guess
-            </Button>
+            <form className="flex flex-col" onSubmit={handleGuess}>
+              <input
+                onChange={({ target }) => setText(target.value)}
+                type="text"
+                value={text}
+                ref={inputEl}
+                className="mt-3 p-2 rounded text-stroke w-48"
+              ></input>
+              <input
+                className="bg-button text-buttonText p-3 mt-3 w-48 rounded text-sm"
+                type="submit"
+                value="Guess"
+              />
+            </form>
           </div>
         ) : (
           <div className="flex flex-col">
