@@ -26,7 +26,7 @@ export default function Rules() {
         <p className="mt-3">
           If you feel that both players wrote the same word but with a slight
           spelling difference or a synonym, you can press "end", and the game
-          will still be saved in history
+          will still be saved in history.
         </p>
         <p className="mt-3">
           Try not to overthink it too much. If you get stuck just throw
