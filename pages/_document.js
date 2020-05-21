@@ -36,6 +36,10 @@ class MyDocument extends Document {
           <meta name="application-name" content="Mind Merge" />
           <meta name="msapplication-TileColor" content="#232946" />
           <meta name="theme-color" content="#232946" />
+          <meta
+            name="description"
+            content="Mind Merge is a simple word game. Work together with a friend to merge your brains"
+          ></meta>
         </Head>
         <body>
           <Main />
