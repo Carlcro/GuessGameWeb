@@ -63,7 +63,7 @@ export default function IndexPage() {
         <title>Mind Merge - Merge your brains!</title>
       </Head>
       <section>
-        <div id="container" className="h-full px-10 lg:px-20">
+        <div id="container" className="h-full pt-10 px-10 lg:px-20">
           <div className="w-full flex justify-between flex-col sm:flex-row">
             <div className="w-full sm:w-3/5">
               <h1 className="text-headline text-5xl">Welcome to Mind Merge!</h1>
