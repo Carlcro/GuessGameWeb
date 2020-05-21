@@ -12,6 +12,16 @@ export default function Login() {
   const handleLogin = (event) => {
     event.preventDefault();
 
+    if (!email.length) {
+      setError("Email is missing");
+      return;
+    }
+
+    if (!password.length) {
+      setError("Password is missing");
+      return;
+    }
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)

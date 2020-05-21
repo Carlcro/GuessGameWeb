@@ -15,8 +15,18 @@ export default function IndexPage() {
   const handleSignUp = (event) => {
     event.preventDefault();
 
+    if (!email.length) {
+      setError("Email is missing");
+      return;
+    }
+
     if (!name.length) {
       setError("Name is missing");
+      return;
+    }
+
+    if (!password.length) {
+      setError("Password is missing");
       return;
     }
 
@@ -60,12 +70,12 @@ export default function IndexPage() {
               <h2 className="text-paragraph text-3xl">
                 The game where you work together to merge your brains 🤯. Join
                 up with a friend, work your way to reach the same word and win
-                🚀!
+                ✨!
               </h2>
             </div>
             <div className="flex flex-1 flex-col h-full mt-5 bg-paragraph rounded p-3 max-w-xs">
               <div className="flex flex-col">
-                <h2 className="text-2xl text-stroke">Sign Up</h2>
+                <h2 className="text-xl text-stroke">Sign Up</h2>
                 <form className="flex flex-col text-stroke">
                   <label htmlFor="email">Email</label>
                   <input
