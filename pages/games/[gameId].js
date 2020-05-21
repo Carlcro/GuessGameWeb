@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useRouter } from "next/router";
 import Button from "../../components/button";
 
@@ -22,6 +22,8 @@ export default function GameScreen() {
 
   const [text, setText] = useState("");
   const [gameInitialized, setGameInitialized] = useState(false);
+
+  const inputEl = useRef(null);
 
   const [players, setPlayers] = useState({
     player1: { name: "", userId: "" },
@@ -76,6 +78,7 @@ export default function GameScreen() {
 
   const handleGuess = async () => {
     setText("");
+    inputEl.current.blur();
     const currentGuesses = [...guesses];
     const guess = formatGuess(text);
 
@@ -106,6 +109,8 @@ export default function GameScreen() {
   };
 
   const endGame = async () => {
+    window.scrollTo(0, 0);
+
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
         isFinished: true,
@@ -339,6 +344,7 @@ export default function GameScreen() {
               onChange={({ target }) => setText(target.value)}
               type="text"
               value={text}
+              ref={inputEl}
               className="mt-3 p-2 rounded text-stroke w-48"
             ></input>
             <Button className="text-sm" onClick={handleGuess}>
