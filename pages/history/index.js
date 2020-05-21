@@ -39,11 +39,16 @@ export default function History() {
               gameId: doc.id,
               opponentName,
               title: getLastWord(guesses),
-              finishedAt: finishedAt ? finishedAt.toDate().toDateString() : "",
+              finishedAt: finishedAt?.toDate() || new Date().setTime(0),
+              finishedAtString: finishedAt
+                ? finishedAt.toDate().toDateString()
+                : "",
             });
           });
 
-          setGames(list);
+          const sortedList = list.sort((a, b) => b.finishedAt - a.finishedAt);
+
+          setGames(sortedList);
         });
     }
   }, [user]);
