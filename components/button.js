@@ -5,11 +5,12 @@ export default function Button({
   onClick,
   disabled = false,
   children,
+  type = "button",
 }) {
   return (
     <button
       className={`bg-button text-buttonText p-3 mt-3 w-48 rounded ${className} `}
-      type="button"
+      type={type}
       onClick={onClick}
       disabled={disabled}
     >
