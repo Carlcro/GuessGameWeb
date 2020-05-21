@@ -37,6 +37,10 @@ export default function Profile() {
     </div>
   );
 
+  if (!user) {
+    return <div></div>;
+  }
+
   return (
     <div className="flex flex-col w-full justify-center items-center px-12 ">
       <div className="max-w-sm w-full">
