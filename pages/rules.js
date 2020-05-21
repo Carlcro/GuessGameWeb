@@ -7,7 +7,7 @@ export default function Rules() {
           Start with each player writing a word. It can be any word you like.
         </p>
         <p className="mt-3">
-          When the players are done, the words are displayed for both players.
+          When the players are done, the words are displayed for both.
         </p>
         <p className="mt-3">
           The objective now is for the players to come up with a word that they
@@ -25,8 +25,12 @@ export default function Rules() {
         </p>
         <p className="mt-3">
           If you feel that both players wrote the same word but with a slight
-          difference (one with plural for example) you can press end game and
-          the game will still be saved in history
+          spelling difference or a synonym, you can press "end", and the game
+          will still be saved in history.
+        </p>
+        <p className="mt-3">
+          Try not to overthink it too much. If you get stuck just throw
+          something out there, even if it doesn't make much sense ✨.
         </p>
       </div>
     </div>
