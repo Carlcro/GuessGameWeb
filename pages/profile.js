@@ -43,34 +43,38 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col w-full justify-center items-center px-12 ">
-      <div className="max-w-sm w-full">
+      <div className="max-w-xl w-full">
         <h1 className="text-3xl text-headline text-center">Profile</h1>
-        <div className="flex justify-between w-full">
-          <div>
-            <h2 className="text-2xl text-headline">Name</h2>
-            <div className="text-xl">{user.name}</div>
+        <div className="flex w-full">
+          <div className="flex flex-col flex-1 items-center">
+            <div className="flex flex-col">
+              <h2 className="text-2xl text-headline">Name</h2>
+              <div className="text-xl">{user.name}</div>
+            </div>
           </div>
-          <div className="w-32">
-            <h2 className="text-2xl text-headline">Friends</h2>
-            <ul>
-              {user.friends.map((friend) => (
-                <li className="flex text-xl" key={friend.userId}>
-                  {openConfirmBox === friend.userId ? (
-                    <ConfirmBox friend={friend.userId} />
-                  ) : (
-                    <div className="flex">
-                      <FontAwesomeIcon
-                        className=" mr-3 cursor-pointer text-headline"
-                        onClick={() => setOpenConfirmBox(friend.userId)}
-                        size="sm"
-                        icon={faTimes}
-                      />
-                      <div>{friend.name}</div>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
+          <div className="flex flex-col flex-1 items-center">
+            <div className="flex w-40 flex-col items-start">
+              <h2 className="text-2xl text-headline">Friends</h2>
+              <ul>
+                {user.friends.map((friend) => (
+                  <li className="flex text-xl" key={friend.userId}>
+                    {openConfirmBox === friend.userId ? (
+                      <ConfirmBox friend={friend.userId} />
+                    ) : (
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className=" mr-3 cursor-pointer text-headline"
+                          onClick={() => setOpenConfirmBox(friend.userId)}
+                          size="sm"
+                          icon={faTimes}
+                        />
+                        <div>{friend.name}</div>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
