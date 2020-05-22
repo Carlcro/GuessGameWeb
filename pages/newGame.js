@@ -3,6 +3,7 @@ import { AuthContext } from "./_app";
 import Button from "../components/button";
 import { useRouter } from "next/router";
 import { firebase } from "../firebase/index";
+import Link from "next/link";
 
 export default function NewGame() {
   const { user } = useContext(AuthContext);
@@ -37,12 +38,20 @@ export default function NewGame() {
       <div className="flex flex-col items-center h-screen">
         <h1 className="text-4xl text-headline">New Game</h1>
         <div className="flex flex-col justify-center flex-1">
-          {user &&
+          {user.friends.length > 0 ? (
             user.friends.map((friend) => (
               <Button key={friend.userId} onClick={() => startNewGame(friend)}>
                 {friend.name}
               </Button>
-            ))}
+            ))
+          ) : (
+            <div>
+              <span className="text-headline">
+                You need to add friends in order to play. Send a friend request{" "}
+              </span>
+              <Link href="/addFriends">Here.</Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
