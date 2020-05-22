@@ -129,7 +129,7 @@ export default function GameScreen() {
 
     setLeven(value > 0 && value < 3);
 
-    return value <= 2;
+    return value <= 1;
   };
 
   const friendHasAnswered = () => {
