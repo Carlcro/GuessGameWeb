@@ -33,6 +33,10 @@ export default function NewGame() {
     router.push(`/games/[gameId]`, `/games/${gameId.id}`);
   };
 
+  if (!user) {
+    return <div></div>;
+  }
+
   return (
     <div>
       <div className="flex flex-col items-center h-screen">
