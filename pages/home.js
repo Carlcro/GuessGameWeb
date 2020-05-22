@@ -23,7 +23,6 @@ export default function Home() {
   const getIsPlayer1 = (players) => players.player1.userId === user.userId;
 
   useEffect(() => {
-    console.log(firebase.auth().currentUser);
     if (user) {
       return firebase
         .firestore()
