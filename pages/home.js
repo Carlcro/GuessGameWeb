@@ -5,11 +5,13 @@ import Link from "next/link";
 import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import Button from "../components/button";
 
 export default function Home() {
   const { user, logout } = useContext(AuthContext);
   const [games, setGames] = useState([]);
   const [recentlyFinishedGames, setRecentlyFinishedGames] = useState([]);
+  const [emailSent, setEmailSent] = useState(false);
 
   const getCanGuess = (guesses, round, isPlayer1) => {
     if (isPlayer1) {
@@ -21,6 +23,7 @@ export default function Home() {
   const getIsPlayer1 = (players) => players.player1.userId === user.userId;
 
   useEffect(() => {
+    console.log(firebase.auth().currentUser);
     if (user) {
       return firebase
         .firestore()
@@ -76,6 +79,37 @@ export default function Home() {
         });
     }
   }, [user]);
+
+  const sendVerificationMail = () => {
+    firebase.auth().currentUser.sendEmailVerification();
+    setEmailSent(true);
+  };
+
+  if (!user) {
+    return <div></div>;
+  }
+
+  if (!user.emailVerified) {
+    return (
+      <>
+        <Head>
+          <title>Home</title>
+        </Head>
+        <div className="flex flex-col justify-center items-center py-8 flex-1">
+          <div className="flex flex-col items-center px-10">
+            <div className="text-headline text-center">
+              {emailSent
+                ? "Email Sent!"
+                : "Before you can play, you need to verify your account by following the link your the email."}
+            </div>
+            {!emailSent && (
+              <Button onClick={sendVerificationMail}>Send email again</Button>
+            )}
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-between items-center py-8 flex-1">
