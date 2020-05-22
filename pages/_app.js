@@ -30,24 +30,29 @@ function MyApp({ Component, pageProps }) {
         .collection("users")
         .doc(authUser.uid)
         .onSnapshot((querySnapshot) => {
-          const {
-            name,
-            email,
-            userId,
-            friends,
-            friendRequests,
-          } = querySnapshot.data();
+          if (querySnapshot.exists) {
+            const {
+              name,
+              email,
+              userId,
+              friends,
+              friendRequests,
+            } = querySnapshot.data();
 
-          Promise.all([getUserInfo(friends), getUserInfo(friendRequests)]).then(
-            ([friendsData, friendsRequestData]) =>
+            Promise.all([
+              getUserInfo(friends),
+              getUserInfo(friendRequests),
+            ]).then(([friendsData, friendsRequestData]) =>
               setUser({
                 name,
                 email,
                 userId,
                 friends: friendsData,
                 friendRequests: friendsRequestData,
+                emailVerified: authUser.emailVerified,
               })
-          );
+            );
+          }
         });
     } else {
       setUser(null);

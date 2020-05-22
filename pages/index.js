@@ -12,7 +12,7 @@ export default function IndexPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
 
     if (!email.length) {
@@ -35,14 +35,15 @@ export default function IndexPage() {
       return;
     }
 
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        createUser(user);
-      })
-      .then(() => router.replace("/home"))
-      .catch((error) => setError(error.message));
+    try {
+      const user = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      await createUser(user);
+      await firebase.auth().currentUser.sendEmailVerification();
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const createUser = ({ user }) => {
@@ -73,7 +74,7 @@ export default function IndexPage() {
                 ✨!
               </h2>
             </div>
-            <div className="flex flex-1 flex-col h-full mt-5 bg-paragraph rounded p-3 max-w-xs">
+            <div className="flex flex-1 flex-col h-full  bg-paragraph rounded p-3 max-w-xs">
               <div className="flex flex-col">
                 <h2 className="text-xl text-stroke">Sign Up</h2>
                 <form className="flex flex-col text-stroke">

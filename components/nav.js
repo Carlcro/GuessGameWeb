@@ -70,14 +70,16 @@ export default function Nav() {
                     <span className="ml-2">Rules</span>
                   </button>
                 </li>
-                <li className="nav-item">
-                  <button
-                    onClick={() => handleRouteClick("/addFriends")}
-                    className="px-3 py-2 flex items-center text-md font-bold leading-snug text-white hover:opacity-75"
-                  >
-                    <span className="ml-2">Add Friends</span>
-                  </button>
-                </li>
+                {user.emailVerified && (
+                  <li className="nav-item">
+                    <button
+                      onClick={() => handleRouteClick("/addFriends")}
+                      className="px-3 py-2 flex items-center text-md font-bold leading-snug text-white hover:opacity-75"
+                    >
+                      <span className="ml-2">Add Friends</span>
+                    </button>
+                  </li>
+                )}
                 {user.friendRequests.length > 0 && (
                   <li className="nav-item">
                     <button
