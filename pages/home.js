@@ -8,9 +8,9 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/button";
 
 export default function Home() {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [games, setGames] = useState([]);
-  const [recentlyFinishedGames, setRecentlyFinishedGames] = useState([]);
+  const [recentlyFinishedGame, setRecentlyFinishedGame] = useState(null);
   const [emailSent, setEmailSent] = useState(false);
 
   const getCanGuess = (guesses, round, isPlayer1) => {
@@ -55,26 +55,26 @@ export default function Home() {
         .collection("guessGames")
         .where("playerIds", "array-contains", user.userId)
         .where("isFinished", "==", true)
+        .orderBy("finishedAt", "desc")
+        .limit(1)
         .onSnapshot((querySnapshot) => {
           const list = [];
           querySnapshot.forEach((doc) => {
             const { players, finishedAt } = doc.data();
 
-            if (finishedAt) {
-              const isPlayer1 = getIsPlayer1(players);
+            const isPlayer1 = getIsPlayer1(players);
 
-              const opponentName = isPlayer1
-                ? players.player2.name
-                : players.player1.name;
-              list.push({ gameId: doc.id, opponentName, finishedAt });
-            }
+            const opponentName = isPlayer1
+              ? players.player2.name
+              : players.player1.name;
+            list.push({ gameId: doc.id, opponentName, finishedAt });
+
+            setRecentlyFinishedGame({
+              gameId: doc.id,
+              opponentName,
+              finishedAt,
+            });
           });
-
-          const topOne = list
-            .sort((a, b) => b.finishedAt.seconds - a.finishedAt.seconds)
-            .slice(0, 1);
-
-          setRecentlyFinishedGames(topOne);
         });
     }
   }, [user]);
@@ -140,23 +140,20 @@ export default function Home() {
             </div>
           </div>
         )}
-        {recentlyFinishedGames.length > 0 && (
+        {recentlyFinishedGame && (
           <div>
             <div className="text-center mt-3">Recently finished game</div>
             <div className="flex flex-col">
-              {recentlyFinishedGames.map((game) => (
-                <Link
-                  href="/games/[gameId]"
-                  as={`/games/${game.gameId}`}
-                  key={game.gameId}
-                >
-                  <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-                    <div className="flex">
-                      <div className="flex-1">{`${game.opponentName}`}</div>
-                    </div>
-                  </a>
-                </Link>
-              ))}
+              <Link
+                href="/games/[gameId]"
+                as={`/games/${recentlyFinishedGame.gameId}`}
+              >
+                <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
+                  <div className="flex">
+                    <div className="flex-1">{`${recentlyFinishedGame.opponentName}`}</div>
+                  </div>
+                </a>
+              </Link>
             </div>
           </div>
         )}

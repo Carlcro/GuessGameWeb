@@ -23,7 +23,8 @@ export default function History() {
         .collection("guessGames")
         .where("playerIds", "array-contains", user.userId)
         .where("isFinished", "==", true)
-        .where("round", ">", 1)
+        .orderBy("finishedAt", "desc")
+        .limit(5)
         .get()
         .then((data) => {
           const list = [];
@@ -46,9 +47,7 @@ export default function History() {
             });
           });
 
-          const sortedList = list.sort((a, b) => b.finishedAt - a.finishedAt);
-
-          setGames(sortedList);
+          setGames(list);
         });
     }
   }, [user]);
@@ -61,17 +60,15 @@ export default function History() {
       <h1 className="text-3xl text-headline">History</h1>
 
       {games.map((game) => (
-        <div className="flex">
-          <Link
-            href="/history/[gameId]"
-            as={`/history/${game.gameId}`}
-            key={game.gameId}
-          >
-            <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-              {game.title}
-            </a>
-          </Link>
-        </div>
+        <Link
+          href="/history/[gameId]"
+          as={`/history/${game.gameId}`}
+          key={game.gameId}
+        >
+          <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
+            {game.title}
+          </a>
+        </Link>
       ))}
     </div>
   );
