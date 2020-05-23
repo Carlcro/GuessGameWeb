@@ -38,7 +38,6 @@ function MyApp({ Component, pageProps }) {
               friends,
               friendRequests,
             } = querySnapshot.data();
-
             Promise.all([
               getUserInfo(friends),
               getUserInfo(friendRequests),
@@ -49,7 +48,10 @@ function MyApp({ Component, pageProps }) {
                 userId,
                 friends: friendsData,
                 friendRequests: friendsRequestData,
-                emailVerified: authUser.emailVerified,
+                emailVerified:
+                  process.env.NODE_ENV === "production"
+                    ? authUser.emailVerified
+                    : true,
               })
             );
           }

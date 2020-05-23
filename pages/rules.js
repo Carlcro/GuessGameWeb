@@ -1,7 +1,7 @@
 export default function Rules() {
   return (
     <div className="flex items-center justify-center">
-      <div className="max-w-lg px-4">
+      <div className="max-w-lg px-4 pb-4">
         <h1 className="text-center text-headline text-3xl">Rules</h1>
         <p className="mt-3">
           Start with each player writing a word. It can be any word you like.

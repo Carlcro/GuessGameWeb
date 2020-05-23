@@ -91,31 +91,41 @@ export default function GameScreen() {
       currentGuesses[round - 1].player2 = guess;
     }
 
-    await firebase.firestore().collection("guessGames").doc(gameId).set(
-      {
-        guesses: currentGuesses,
-      },
-      { merge: true }
-    );
-
     if (
       currentGuesses[round - 1].player1 &&
       currentGuesses[round - 1].player2
     ) {
       if (isSameWord(currentGuesses)) {
-        endGame();
+        endGame(currentGuesses);
+      } else {
+        nextRound(currentGuesses);
       }
-      nextRound(currentGuesses);
+    } else {
+      await firebase.firestore().collection("guessGames").doc(gameId).set(
+        {
+          guesses: currentGuesses,
+        },
+        { merge: true }
+      );
     }
   };
 
-  const endGame = async () => {
+  const endGame = async (currentGuesses) => {
     window.scrollTo(0, 0);
+
+    const newRound = round + 1;
+
+    const guesses = [
+      ...currentGuesses,
+      { round: newRound, player1: "", player2: "" },
+    ];
 
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
+        guesses: guesses,
         isFinished: true,
         finishedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        round: newRound,
       },
       { merge: true }
     );
@@ -261,7 +271,7 @@ export default function GameScreen() {
           <div className="flex justify-end mr-4">
             {!gameFinished && (
               <button
-                onClick={endGame}
+                onClick={() => endGame(guesses)}
                 className="bg-button text-buttonText text-center py-1 px-3   
           rounded"
               >
@@ -334,7 +344,7 @@ export default function GameScreen() {
           </div>
         </div>
         {!gameFinished ? (
-          <div className="flex flex-col items-center px-8 ">
+          <div className="flex flex-col text-center items-center px-8 ">
             {friendHasAnswered() && <span>Other player has answered</span>}
             {hasGuessed() && (
               <span>

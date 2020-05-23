@@ -40,7 +40,9 @@ export default function IndexPage() {
         .auth()
         .createUserWithEmailAndPassword(email, password);
       await createUser(user);
-      await firebase.auth().currentUser.sendEmailVerification();
+      if (process.env.NODE_ENV === "production") {
+        await firebase.auth().currentUser.sendEmailVerification();
+      } 
     } catch (error) {
       setError(error.message);
     }
