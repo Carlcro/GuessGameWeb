@@ -3,10 +3,12 @@ import { AuthContext } from "../_app";
 import { firebase } from "../../firebase/index";
 import Link from "next/link";
 import Head from "next/head";
+import Button from "../../components/button";
 
 export default function History() {
   const { user } = useContext(AuthContext);
   const [games, setGames] = useState([]);
+  const [last, setLast] = useState(null);
 
   const getLastWord = (guesses) => {
     if (guesses.slice(-2)[0].player1 === guesses.slice(-2)[0].player2) {
@@ -29,8 +31,48 @@ export default function History() {
         .then((data) => {
           const list = [];
           data.forEach((doc) => {
-            const { players, finishedAt, guesses } = doc.data();
+            setLast(doc);
+            const { players, guesses, round } = doc.data();
+            const title = getLastWord(guesses);
 
+            if (title) {
+              const opponentName =
+                players.player1.userId === user.userId
+                  ? players.player2.name
+                  : players.player1.name;
+
+              list.push({
+                gameId: doc.id,
+                opponentName,
+                title,
+              });
+            }
+          });
+
+          setGames(list);
+        });
+    }
+  }, [user]);
+
+  const loadMore = () => {
+    firebase
+      .firestore()
+      .collection("guessGames")
+      .where("playerIds", "array-contains", user.userId)
+      .where("isFinished", "==", true)
+      .orderBy("finishedAt", "desc")
+      .startAfter(last)
+      .limit(5)
+      .get()
+      .then((data) => {
+        const list = [];
+        data.forEach((doc) => {
+          setLast(doc);
+
+          const { players, guesses, round } = doc.data();
+          const title = getLastWord(guesses);
+
+          if (title.length) {
             const opponentName =
               players.player1.userId === user.userId
                 ? players.player2.name
@@ -39,18 +81,14 @@ export default function History() {
             list.push({
               gameId: doc.id,
               opponentName,
-              title: getLastWord(guesses),
-              finishedAt: finishedAt?.toDate() || new Date().setTime(0),
-              finishedAtString: finishedAt
-                ? finishedAt.toDate().toDateString()
-                : "",
+              title,
             });
-          });
-
-          setGames(list);
+          }
         });
-    }
-  }, [user]);
+
+        setGames([...games, ...list]);
+      });
+  };
 
   return (
     <div className="flex flex-col items-center py-8 min-h-screen">
@@ -70,6 +108,7 @@ export default function History() {
           </a>
         </Link>
       ))}
+      <Button onClick={loadMore}>Load more</Button>
     </div>
   );
 }
