@@ -369,8 +369,29 @@ export default function GameScreen() {
             <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
             <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
           </div>
+          {gameFinished && (
+            <div className="flex flex-col items-center">
+              {newGameId ? (
+                <div className="flex flex-col justify-center items-center">
+                  <div className="text-center">
+                    Your friend wants to play again!
+                  </div>
+                  <Link href="/games/[gameId]" as={`/games/${newGameId}`}>
+                    <a className="bg-button text-buttonText p-3 mt-3 w-48 rounded text-center">
+                      Go to new game
+                    </a>
+                  </Link>
+                </div>
+              ) : (
+                <Button onClick={playAgain}>Play Again</Button>
+              )}
+              {leven && (
+                <Button onClick={resumeFinishedGame}>Not same word</Button>
+              )}
+            </div>
+          )}
         </div>
-        {!gameFinished ? (
+        {!gameFinished && (
           <div className="flex flex-col text-center items-center px-8 ">
             {friendHasAnswered() && <span>Other player has answered</span>}
             {hasGuessed() && (
@@ -392,27 +413,6 @@ export default function GameScreen() {
                 value="Guess"
               />
             </form>
-          </div>
-        ) : (
-          <div className="flex flex-col">
-            <div className="mb-12 text-center">Finished</div>
-            {newGameId ? (
-              <div className="flex flex-col justify-center items-center">
-                <div className="text-center">
-                  Your friend wants to play again!
-                </div>
-                <Link href="/games/[gameId]" as={`/games/${newGameId}`}>
-                  <a className="bg-button text-buttonText p-3 mt-3 w-48 rounded text-center">
-                    Go to new game
-                  </a>
-                </Link>
-              </div>
-            ) : (
-              <Button onClick={playAgain}>Play Again</Button>
-            )}
-            {leven && (
-              <Button onClick={resumeFinishedGame}>Not same word</Button>
-            )}
           </div>
         )}
       </div>
