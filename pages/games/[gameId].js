@@ -25,6 +25,8 @@ export default function GameScreen() {
 
   const inputEl = useRef(null);
 
+  const [newGameId, setNewGameId] = useState(false);
+
   const [players, setPlayers] = useState({
     player1: { name: "", userId: "" },
     player2: { name: "", userId: "" },
@@ -168,15 +170,40 @@ export default function GameScreen() {
         .collection("guessGames")
         .doc(gameId)
         .onSnapshot((doc) => {
-          const { guesses, round, isFinished, players } = doc.data();
+          const { guesses, round, isFinished, players, newGameId } = doc.data();
           setGuesses(guesses);
           setRound(round);
           setPlayers(players);
           setGameFinished(isFinished);
+          setNewGameId(newGameId);
           setGameInitialized(true);
         });
     }
   }, [gameId]);
+
+  const playAgain = async () => {
+    const newGame = {
+      playerIds: [players.player1.userId, players.player2.userId],
+      players,
+      guesses: [{ round: 1, player1: "", player2: "" }],
+      round: 1,
+      isFinished: false,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const newGameRef = await firebase
+      .firestore()
+      .collection("guessGames")
+      .add(newGame);
+
+    await firebase.firestore().collection("guessGames").doc(gameId).set(
+      {
+        newGameId: newGameRef.id,
+      },
+      { merge: true }
+    );
+    router.push(`/games/[gameId]`, `/games/${newGameRef.id}`);
+  };
 
   const Guess = ({ children, selectedRound, selectedPlayer, reactions }) => {
     return (
@@ -369,6 +396,20 @@ export default function GameScreen() {
         ) : (
           <div className="flex flex-col">
             <div className="mb-12 text-center">Finished</div>
+            {newGameId ? (
+              <div className="flex flex-col justify-center items-center">
+                <div className="text-center">
+                  Your friend wants to play again!
+                </div>
+                <Link href="/games/[gameId]" as={`/games/${newGameId}`}>
+                  <a className="bg-button text-buttonText p-3 mt-3 w-48 rounded text-center">
+                    Go to new game
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              <Button onClick={playAgain}>Play Again</Button>
+            )}
             {leven && (
               <Button onClick={resumeFinishedGame}>Not same word</Button>
             )}
