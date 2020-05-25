@@ -17,6 +17,8 @@ import levenshteinDistance from "../../utils/levenshteinDistance";
 export default function GameScreen() {
   const { user } = useContext(AuthContext);
 
+  const [chatToggled, setChatToggled] = useState(true);
+
   const router = useRouter();
   const { gameId } = router.query;
 
@@ -35,6 +37,16 @@ export default function GameScreen() {
   const [guesses, setGuesses] = useState([
     { round: 1, player1: "", player2: "" },
   ]);
+
+  const [chat, setChat] = useState([
+    { player: 1, message: "HAHAHAHA" },
+    { player: 1, message: "Cool" },
+    { player: 2, message: "Hur tänkte du där" },
+    { player: 1, message: "Bara skrev nått haha" },
+    { player: 2, message: "Yes vi klarade det" },
+    { player: 1, message: "Snyggt!!!" },
+  ]);
+
   const [round, setRound] = useState(1);
   const [gameFinished, setGameFinished] = useState(false);
   const [leven, setLeven] = useState(false);
@@ -295,7 +307,16 @@ export default function GameScreen() {
       ></EmojiControl>
       <div className="flex flex-col min-w-full items-center flex-1 py-8 justify-between">
         <div className="max-w-md w-full">
-          <div className="flex justify-end mr-4">
+          <div className="flex justify-between mr-4">
+            <div>
+              <label htmlFor="chatToggle">Chat</label>
+              <input
+                onChange={() => setChatToggled(!chatToggled)}
+                checked={chatToggled}
+                id="chatToggle"
+                type="checkbox"
+              ></input>
+            </div>
             {!gameFinished && (
               <button
                 onClick={() => endGame(guesses)}
@@ -340,35 +361,51 @@ export default function GameScreen() {
             <div>{players.player1.name}</div>
             <div>{players.player2.name}</div>
           </div>
-          {guesses
-            .filter((guess) => guess.round != round)
-            .map((guess) => (
-              <div
-                className="flex justify-between mt-1 px-10 "
-                key={guess.round}
-              >
-                <Guess
-                  reactions={guess.reactions?.player1}
-                  selectedPlayer="player1"
-                  selectedRound={guess.round}
-                  reactionClicked={handleReactionSelected}
+          {chatToggled ? (
+            <div className="flex flex-col border-highlight border-2 border-solid">
+              {chat.map((chatMessage) => (
+                <div
+                  className={`border-button py-2 px-4 border-2 border-solid ${
+                    chatMessage.player === 2 && "text-right"
+                  }`}
                 >
-                  {guess.player1}
-                </Guess>
-                <Guess
-                  reactions={guess.reactions?.player2}
-                  selectedPlayer="player2"
-                  selectedRound={guess.round}
-                  reactionClicked={handleReactionSelected}
-                >
-                  {guess.player2}
-                </Guess>
+                  <div>{chatMessage.message}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              {guesses
+                .filter((guess) => guess.round != round)
+                .map((guess) => (
+                  <div
+                    className="flex justify-between mt-1 px-10 "
+                    key={guess.round}
+                  >
+                    <Guess
+                      reactions={guess.reactions?.player1}
+                      selectedPlayer="player1"
+                      selectedRound={guess.round}
+                      reactionClicked={handleReactionSelected}
+                    >
+                      {guess.player1}
+                    </Guess>
+                    <Guess
+                      reactions={guess.reactions?.player2}
+                      selectedPlayer="player2"
+                      selectedRound={guess.round}
+                      reactionClicked={handleReactionSelected}
+                    >
+                      {guess.player2}
+                    </Guess>
+                  </div>
+                ))}
+              <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10 px-2 py-1 justify-between mt-3">
+                <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
+                <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
               </div>
-            ))}
-          <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10 px-2 py-1 justify-between mt-3">
-            <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
-            <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
-          </div>
+            </div>
+          )}
           {gameFinished && (
             <div className="flex flex-col items-center">
               {newGameId ? (
