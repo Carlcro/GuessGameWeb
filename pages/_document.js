@@ -40,6 +40,10 @@ class MyDocument extends Document {
             name="description"
             content="Mind Merge is a simple word game. Work together with a friend to merge your brains"
           ></meta>
+          <meta
+            name="google-site-verification"
+            content="YzTzko4juFHqK8vAFFvDBX6TnKJ-dsJvknhAy3RU4GQ"
+          />
         </Head>
         <body>
           <Main />
