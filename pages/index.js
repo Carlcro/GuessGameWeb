@@ -9,6 +9,8 @@ export default function IndexPage() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -42,7 +44,7 @@ export default function IndexPage() {
       await createUser(user);
       if (process.env.NODE_ENV === "production") {
         await firebase.auth().currentUser.sendEmailVerification();
-      } 
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -85,15 +87,26 @@ export default function IndexPage() {
                     id="email"
                     className="p-2 rounded"
                     type="email"
+                    value={email}
                     onChange={({ target }) => setEmail(target.value)}
                   ></input>
+                  <label htmlFor="email">Username</label>
+                  <input
+                    id="Username"
+                    className="p-2 rounded"
+                    type="text"
+                    value={username}
+                    onChange={({ target }) => setUsername(target.value)}
+                  ></input>
+
                   <label className="mt-2" htmlFor="name">
-                    First Name
+                    Display Name
                   </label>
                   <input
                     id="name"
                     className="p-2 rounded"
                     type="text"
+                    value={name}
                     onChange={({ target }) => setName(target.value)}
                   ></input>
                   <label className="mt-2" htmlFor="password">
@@ -103,6 +116,7 @@ export default function IndexPage() {
                     id="password"
                     className="p-2 rounded"
                     type="password"
+                    value={password}
                     onChange={({ target }) => setPassword(target.value)}
                   ></input>
                   <label className="mt-2" htmlFor="repeatPassword">
@@ -112,6 +126,7 @@ export default function IndexPage() {
                     id="repeatPassword"
                     className="p-2 rounded"
                     type="password"
+                    value={rePassword}
                     onChange={({ target }) => setRePassword(target.value)}
                   ></input>
                   <button
