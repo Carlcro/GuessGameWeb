@@ -100,8 +100,8 @@ function getUserInfo(allUsers) {
             .get()
             .then((data) => {
               data.forEach((user) => {
-                const { name, userId } = user.data();
-                usersArray.push({ name, userId });
+                const { name, email, userId } = user.data();
+                usersArray.push({ name, userId, email });
               });
               return Promise.resolve(usersArray);
             })

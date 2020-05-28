@@ -41,7 +41,17 @@ export default function Home() {
             const opponentName = isPlayer1
               ? players.player2.name
               : players.player1.name;
-            list.push({ gameId: doc.id, opponentName, canGuess });
+
+            const opponentEmail = isPlayer1
+              ? players.player2.email
+              : players.player1.email;
+
+            list.push({
+              gameId: doc.id,
+              opponentName,
+              canGuess,
+              opponentEmail,
+            });
           });
           setGames(list);
         });
@@ -58,7 +68,6 @@ export default function Home() {
         .orderBy("finishedAt", "desc")
         .limit(1)
         .onSnapshot((querySnapshot) => {
-          const list = [];
           querySnapshot.forEach((doc) => {
             const { players, finishedAt } = doc.data();
 
@@ -67,12 +76,16 @@ export default function Home() {
             const opponentName = isPlayer1
               ? players.player2.name
               : players.player1.name;
-            list.push({ gameId: doc.id, opponentName, finishedAt });
+
+            const opponentEmail = isPlayer1
+              ? players.player2.email
+              : players.player1.email;
 
             setRecentlyFinishedGame({
               gameId: doc.id,
               opponentName,
               finishedAt,
+              opponentEmail,
             });
           });
         });
@@ -127,9 +140,14 @@ export default function Home() {
                   as={`/games/${game.gameId}`}
                   key={game.gameId}
                 >
-                  <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
+                  <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-2 mt-3">
                     <div className="flex">
-                      <div className="flex-1">{`${game.opponentName}`}</div>
+                      <div className="flex flex-col flex-1">
+                        <div className="text-white">{`${game.opponentName}`}</div>
+                        <div className="text-xs">{`${
+                          game.opponentEmail || ""
+                        }`}</div>
+                      </div>
                       {game.canGuess && (
                         <FontAwesomeIcon size="xs" icon={faCircle} />
                       )}
@@ -148,9 +166,12 @@ export default function Home() {
                 href="/games/[gameId]"
                 as={`/games/${recentlyFinishedGame.gameId}`}
               >
-                <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-                  <div className="flex">
-                    <div className="flex-1">{`${recentlyFinishedGame.opponentName}`}</div>
+                <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-2 mt-3">
+                  <div className="flex flex-col flex-1">
+                    <div className="text-white">{`${recentlyFinishedGame.opponentName}`}</div>
+                    <div className="text-xs">{`${
+                      recentlyFinishedGame.opponentEmail || ""
+                    }`}</div>
                   </div>
                 </a>
               </Link>

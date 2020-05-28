@@ -41,10 +41,16 @@ export default function History() {
                   ? players.player2.name
                   : players.player1.name;
 
+              const opponentEmail =
+                players.player1.userId === user.userId
+                  ? players.player2.email
+                  : players.player1.email;
+
               list.push({
                 gameId: doc.id,
                 opponentName,
                 title,
+                opponentEmail,
               });
             }
           });
@@ -69,7 +75,7 @@ export default function History() {
         data.forEach((doc) => {
           setLast(doc);
 
-          const { players, guesses, round } = doc.data();
+          const { players, guesses } = doc.data();
           const title = getLastWord(guesses);
 
           if (title.length) {
@@ -78,9 +84,15 @@ export default function History() {
                 ? players.player2.name
                 : players.player1.name;
 
+            const opponentEmail =
+              players.player1.userId === user.userId
+                ? players.player2.email
+                : players.player1.email;
+
             list.push({
               gameId: doc.id,
               opponentName,
+              opponentEmail,
               title,
             });
           }
@@ -104,7 +116,10 @@ export default function History() {
           key={game.gameId}
         >
           <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
-            {game.title}
+            <div className="flex flex-col flex-1">
+              <div className="text-white">{`${game.title}`}</div>
+              <div className="text-xs">{`${game.opponentEmail || ""}`}</div>
+            </div>
           </a>
         </Link>
       ))}

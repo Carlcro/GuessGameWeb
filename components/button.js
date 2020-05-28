@@ -9,7 +9,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={`bg-button text-buttonText p-3 mt-3 w-48 rounded ${className} `}
+      className={`bg-button text-buttonText p-2 mt-3 w-48 rounded ${className} `}
       type={type}
       onClick={onClick}
       disabled={disabled}

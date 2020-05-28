@@ -44,9 +44,16 @@ export default function NewGame() {
         <div className="flex flex-col justify-center flex-1">
           {user.friends.length > 0 ? (
             user.friends.map((friend) => (
-              <Button key={friend.userId} onClick={() => startNewGame(friend)}>
-                {friend.name}
-              </Button>
+              <button
+                className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-2 mt-3"
+                key={friend.userId}
+                onClick={() => startNewGame(friend)}
+              >
+                <div className="flex flex-col">
+                  <div className="text-white">{friend.name}</div>
+                  <div className="text-sm">{friend.email}</div>
+                </div>
+              </button>
             ))
           ) : (
             <div>
