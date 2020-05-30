@@ -182,14 +182,51 @@ export default function GameScreen() {
   }, [gameId]);
 
   const playAgain = async () => {
-    const newGame = {
-      playerIds: [players.player1.userId, players.player2.userId],
-      players,
-      guesses: [{ round: 1, player1: "", player2: "" }],
-      round: 1,
-      isFinished: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+    /*
+    Detta ska ta bort start
+    */
+
+    let newPlayers = {};
+    let newGame = {};
+
+    if (players.player2.email) {
+      if (isPlayer1()) {
+        const email = user.friends.find(
+          (x) => x.userId === players.player2.userId
+        ).email;
+
+        newPlayers = {
+          player1: { ...players.player1, email: user.email },
+          player2: { ...players.player2, email },
+        };
+      } else {
+        const email = user.friends.find(
+          (x) => x.userId === players.player1.userId
+        ).email;
+
+        newPlayers = {
+          player1: { ...players.player1, email },
+          player2: { ...players.player2, email: user.email },
+        };
+      }
+      newGame = {
+        playerIds: [players.player1.userId, players.player2.userId],
+        players: newPlayers,
+        guesses: [{ round: 1, player1: "", player2: "" }],
+        round: 1,
+        isFinished: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    } else {
+      newGame = {
+        playerIds: [players.player1.userId, players.player2.userId],
+        players,
+        guesses: [{ round: 1, player1: "", player2: "" }],
+        round: 1,
+        isFinished: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    }
 
     const newGameRef = await firebase
       .firestore()
