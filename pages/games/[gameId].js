@@ -417,6 +417,9 @@ export default function GameScreen() {
           )}
           {gameFinished && (
             <div className="flex flex-col items-center">
+              <div className="text-center text-headline mt-3">
+                {`Game finished after ${guesses.length - 1} rounds!`}
+              </div>
               {newGameId ? (
                 <div className="flex flex-col justify-center items-center">
                   <div className="text-center">
@@ -430,9 +433,6 @@ export default function GameScreen() {
                 </div>
               ) : (
                 <div className="flex flex-col justify-center items-center mt-3">
-                  <div className="text-center text-headline">
-                    {`Game finished after ${guesses.length - 1} rounds!`}
-                  </div>
                   <Button onClick={playAgain}>Play Again</Button>
                 </div>
               )}
