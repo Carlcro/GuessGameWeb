@@ -80,8 +80,10 @@ export default function HistoryGame() {
             <div>{guesses.slice(-1)[0].player1}</div>
             <div>{guesses.slice(-1)[0].player2}</div>
           </div>
+          <div className="text-center text-headline mt-3">
+            {`Game finished after ${guesses.length - 1} rounds!`}
+          </div>
         </div>
-        <div>Finished</div>
       </div>
     </>
   );

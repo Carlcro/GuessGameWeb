@@ -14,6 +14,11 @@ export default function History() {
     if (guesses.slice(-2)[0].player1 === guesses.slice(-2)[0].player2) {
       return guesses.slice(-2)[0].player1;
     } else {
+      if (!guesses.slice(-2)[0].player1 || !guesses.slice(-2)[0].player2) {
+        return `${guesses.slice(-3)[0].player1}/${
+          guesses.slice(-3)[0].player2
+        }`;
+      }
       return `${guesses.slice(-2)[0].player1}/${guesses.slice(-2)[0].player2}`;
     }
   };
@@ -51,6 +56,7 @@ export default function History() {
                 opponentName,
                 title,
                 opponentEmail,
+                nrOfRounds: guesses.length - 1,
               });
             }
           });
@@ -94,6 +100,7 @@ export default function History() {
               opponentName,
               opponentEmail,
               title,
+              nrOfRounds: guesses.length - 1,
             });
           }
         });
@@ -117,7 +124,11 @@ export default function History() {
         >
           <a className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-3 mt-3">
             <div className="flex flex-col flex-1">
-              <div className="text-white">{`${game.title}`}</div>
+              <div className="flex justify-between text-white">
+                <div></div>
+                <div>{`${game.title}`}</div>
+                <div>{game.nrOfRounds}</div>
+              </div>
               <div className="text-xs">{`${game.opponentEmail || ""}`}</div>
             </div>
           </a>

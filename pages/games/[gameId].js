@@ -409,10 +409,12 @@ export default function GameScreen() {
                 )}
               </div>
             ))}
-          <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10 px-2 py-1 justify-between mt-3">
-            <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
-            <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
-          </div>
+          {!gameFinished && (
+            <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10 px-2 py-1 justify-between mt-3">
+              <div>{isPlayer1() && guesses.slice(-1)[0].player1}</div>
+              <div>{!isPlayer1() && guesses.slice(-1)[0].player2}</div>
+            </div>
+          )}
           {gameFinished && (
             <div className="flex flex-col items-center">
               {newGameId ? (
@@ -427,7 +429,12 @@ export default function GameScreen() {
                   </Link>
                 </div>
               ) : (
-                <Button onClick={playAgain}>Play Again</Button>
+                <div className="flex flex-col justify-center items-center mt-3">
+                  <div className="text-center text-headline">
+                    {`Game finished after ${guesses.length - 1} rounds!`}
+                  </div>
+                  <Button onClick={playAgain}>Play Again</Button>
+                </div>
               )}
               {leven && (
                 <Button onClick={resumeFinishedGame}>Not same word</Button>
