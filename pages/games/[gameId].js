@@ -40,9 +40,9 @@ export default function GameScreen() {
   const [leven, setLeven] = useState(false);
 
   const [reactionPosition, setReactionPosition] = useState({
-    show: false,
-    x: 0,
-    y: 0,
+    show: "",
+    selectedPlayer: "",
+    selectedRound: -1,
   });
 
   const isPlayer1 = () => players.player1.userId === user.userId;
@@ -261,13 +261,11 @@ export default function GameScreen() {
     );
   };
 
-  const handleReaction = (selectedRound, selectedPlayer, event) => {
+  const handleReaction = (selectedRound, selectedPlayer) => {
     setReactionPosition({
       selectedRound,
       selectedPlayer,
-      show: true,
-      x: event.clientX,
-      y: event.clientY,
+      show: `${selectedRound}${selectedPlayer}`,
     });
   };
 
@@ -290,7 +288,7 @@ export default function GameScreen() {
       }
     });
 
-    setReactionPosition({ show: false, x: 0, y: 0 });
+    setReactionPosition({ show: "" });
 
     await firebase.firestore().collection("guessGames").doc(gameId).set(
       {
@@ -322,14 +320,7 @@ export default function GameScreen() {
           {isPlayer1() ? players.player2.name : players.player1.name}
         </title>
       </Head>
-      <EmojiControl
-        onReactionSelected={handleReactionSelected}
-        selectedPlayer={reactionPosition.selectedPlayer}
-        selectedRound={reactionPosition.selectedRound}
-        show={reactionPosition.show}
-        yPos={reactionPosition.y}
-        xPos={reactionPosition.x}
-      ></EmojiControl>
+
       <div className="flex flex-col min-w-full items-center flex-1 py-8 justify-between">
         <div className="max-w-md w-full">
           <div className="flex justify-end mr-4">
@@ -384,22 +375,38 @@ export default function GameScreen() {
                 className="flex justify-between mt-1 px-10 "
                 key={guess.round}
               >
-                <Guess
-                  reactions={guess.reactions?.player1}
-                  selectedPlayer="player1"
-                  selectedRound={guess.round}
-                  reactionClicked={handleReactionSelected}
-                >
-                  {guess.player1}
-                </Guess>
-                <Guess
-                  reactions={guess.reactions?.player2}
-                  selectedPlayer="player2"
-                  selectedRound={guess.round}
-                  reactionClicked={handleReactionSelected}
-                >
-                  {guess.player2}
-                </Guess>
+                {reactionPosition.show === `${guess.round}player1` ? (
+                  <EmojiControl
+                    onReactionSelected={handleReactionSelected}
+                    selectedPlayer={reactionPosition.selectedPlayer}
+                    selectedRound={reactionPosition.selectedRound}
+                  ></EmojiControl>
+                ) : (
+                  <Guess
+                    reactions={guess.reactions?.player1}
+                    selectedPlayer="player1"
+                    selectedRound={guess.round}
+                    reactionClicked={handleReactionSelected}
+                  >
+                    {guess.player1}
+                  </Guess>
+                )}
+                {reactionPosition.show === `${guess.round}player2` ? (
+                  <EmojiControl
+                    onReactionSelected={handleReactionSelected}
+                    selectedPlayer={reactionPosition.selectedPlayer}
+                    selectedRound={reactionPosition.selectedRound}
+                  ></EmojiControl>
+                ) : (
+                  <Guess
+                    reactions={guess.reactions?.player2}
+                    selectedPlayer="player2"
+                    selectedRound={guess.round}
+                    reactionClicked={handleReactionSelected}
+                  >
+                    {guess.player2}
+                  </Guess>
+                )}
               </div>
             ))}
           <div className="flex items-center border-headline border-t-2 border-b-2 border-solid  mx-10 h-10 px-2 py-1 justify-between mt-3">
