@@ -27,6 +27,8 @@ export default function GameScreen() {
 
   const [newGameId, setNewGameId] = useState(false);
 
+  const [error, setError] = useState(null);
+
   const [players, setPlayers] = useState({
     player1: { name: "", userId: "" },
     player2: { name: "", userId: "" },
@@ -64,13 +66,17 @@ export default function GameScreen() {
       { round: newRound, player1: "", player2: "" },
     ];
 
-    await firebase.firestore().collection("guessGames").doc(gameId).set(
-      {
-        guesses: guesses,
-        round: newRound,
-      },
-      { merge: true }
-    );
+    try {
+      await firebase.firestore().collection("guessGames").doc(gameId).set(
+        {
+          guesses: guesses,
+          round: newRound,
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const formatGuess = (guess) => {
@@ -103,12 +109,16 @@ export default function GameScreen() {
         nextRound(currentGuesses);
       }
     } else {
-      await firebase.firestore().collection("guessGames").doc(gameId).set(
-        {
-          guesses: currentGuesses,
-        },
-        { merge: true }
-      );
+      try {
+        await firebase.firestore().collection("guessGames").doc(gameId).set(
+          {
+            guesses: currentGuesses,
+          },
+          { merge: true }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -262,6 +272,11 @@ export default function GameScreen() {
   };
 
   const handleReaction = (selectedRound, selectedPlayer, event) => {
+    var rect = event.target.getBoundingClientRect();
+    console.log("rect", rect);
+    console.log("x", event.clientX);
+    console.log("y", event.clientY);
+
     setReactionPosition({
       selectedRound,
       selectedPlayer,
@@ -302,7 +317,7 @@ export default function GameScreen() {
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center min-h-screen">
         <Head>
           <title>Game</title>
         </Head>
@@ -322,15 +337,8 @@ export default function GameScreen() {
           {isPlayer1() ? players.player2.name : players.player1.name}
         </title>
       </Head>
-      <EmojiControl
-        onReactionSelected={handleReactionSelected}
-        selectedPlayer={reactionPosition.selectedPlayer}
-        selectedRound={reactionPosition.selectedRound}
-        show={reactionPosition.show}
-        yPos={reactionPosition.y}
-        xPos={reactionPosition.x}
-      ></EmojiControl>
-      <div className="flex flex-col min-w-full items-center flex-1 py-8 justify-between">
+
+      <div className="flex flex-col min-w-full  items-center flex-1 py-8 justify-between">
         <div className="max-w-md w-full">
           <div className="flex justify-end mr-4">
             {!gameFinished && (
@@ -377,6 +385,14 @@ export default function GameScreen() {
             <div>{players.player1.name}</div>
             <div>{players.player2.name}</div>
           </div>
+          <EmojiControl
+            onReactionSelected={handleReactionSelected}
+            selectedPlayer={reactionPosition.selectedPlayer}
+            selectedRound={reactionPosition.selectedRound}
+            show={reactionPosition.show}
+            yPos={reactionPosition.y}
+            xPos={reactionPosition.x}
+          ></EmojiControl>
           {guesses
             .filter((guess) => guess.round != round)
             .map((guess) => (

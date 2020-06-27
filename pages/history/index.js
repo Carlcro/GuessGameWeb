@@ -4,11 +4,15 @@ import { firebase } from "../../firebase/index";
 import Link from "next/link";
 import Head from "next/head";
 import Button from "../../components/button";
+import { usePaginatedQuery } from "react-query";
 
 export default function History() {
   const { user } = useContext(AuthContext);
   const [games, setGames] = useState([]);
-  const [last, setLast] = useState(null);
+  const [last, setLast] = useState(0);
+
+  const [lastDocument, setLastDocument] = useState(null);
+  const [queryParam, setQueryParam] = useState(null);
 
   const getLastWord = (guesses) => {
     if (guesses.slice(-2)[0].player1 === guesses.slice(-2)[0].player2) {
@@ -31,7 +35,7 @@ export default function History() {
         .then((data) => {
           const list = [];
           data.forEach((doc) => {
-            setLast(doc);
+            setLastDocument(doc);
             const { players, guesses, round } = doc.data();
             const title = getLastWord(guesses);
 
@@ -59,8 +63,31 @@ export default function History() {
         });
     }
   }, [user]);
+  const fetchProjects = (key, last = 0) => loadMore2(last);
 
-  const loadMore = () => {
+  const {
+    isLoading,
+    isError,
+    error,
+    resolvedData,
+    latestData,
+    isFetching,
+    list,
+  } = usePaginatedQuery(["guessGames", queryParam], fetchProjects, {
+    staleTime: Infinity,
+  });
+
+  console.log(
+    isLoading,
+    isError,
+    error,
+    resolvedData,
+    latestData,
+    isFetching,
+    list
+  );
+
+  /* const loadMore = () => {
     firebase
       .firestore()
       .collection("guessGames")
@@ -72,6 +99,7 @@ export default function History() {
       .get()
       .then((data) => {
         const list = [];
+
         data.forEach((doc) => {
           setLast(doc);
 
@@ -100,7 +128,58 @@ export default function History() {
 
         setGames([...games, ...list]);
       });
+  }; */
+  const loadMore2 = (lastDoc) => {
+    const list = [];
+
+    console.log(lastDoc);
+
+    const data = firebase
+      .firestore()
+      .collection("guessGames")
+      .where("playerIds", "array-contains", user.userId)
+      .where("isFinished", "==", true)
+      .orderBy("finishedAt", "desc")
+      .startAfter(1)
+      .limit(5)
+      .get()
+      .then((data) => {
+        console.log("load more");
+        data.forEach((doc) => {
+          const { players, guesses } = doc.data();
+          const title = getLastWord(guesses);
+
+          if (title.length) {
+            const opponentName =
+              players.player1.userId === user.userId
+                ? players.player2.name
+                : players.player1.name;
+
+            const opponentEmail =
+              players.player1.userId === user.userId
+                ? players.player2.email
+                : players.player1.email;
+
+            list.push({
+              gameId: doc.id,
+              opponentName,
+              opponentEmail,
+              title,
+            });
+
+            console.log(list);
+          }
+        });
+
+        return list;
+      });
+
+    return data;
   };
+
+  if (isLoading || isError) {
+    return <div>Loading</div>;
+  }
 
   return (
     <div className="flex flex-col items-center py-8 min-h-screen">
@@ -109,7 +188,7 @@ export default function History() {
       </Head>
       <h1 className="text-3xl text-headline">History</h1>
 
-      {games.map((game) => (
+      {latestData.map((game) => (
         <Link
           href="/history/[gameId]"
           as={`/history/${game.gameId}`}
@@ -123,7 +202,7 @@ export default function History() {
           </a>
         </Link>
       ))}
-      <Button onClick={loadMore}>Load more</Button>
+      <Button onClick={() => setQueryParam(lastDocument)}>Load more</Button>
     </div>
   );
 }
