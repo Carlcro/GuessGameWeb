@@ -1,5 +1,7 @@
 import React from "react";
 
+const emojis = ["👍", "😍", "😂", "😱", "😡", "💡", "🤔"];
+
 export default function EmojiControl({
   onReactionSelected,
   selectedPlayer,
@@ -23,19 +25,11 @@ export default function EmojiControl({
       }}
       className="bg-background  border-highlight border-2 border-solid px-3 py-2 flex text-lg cursor-pointer"
     >
-      <div onClick={() => selectReaction("👍")} className="mr-2">
-        👍
-      </div>
-      <div onClick={() => selectReaction("😍")} className="mr-2">
-        😍
-      </div>
-      <div onClick={() => selectReaction("😂")} className="mr-2">
-        😂
-      </div>
-      <div onClick={() => selectReaction("😱")} className="mr-2">
-        😱
-      </div>
-      <div onClick={() => selectReaction("😡")}>😡</div>
+      {emojis.map((emoji) => (
+        <div onClick={() => selectReaction(emoji)} className="mr-2">
+          {emoji}
+        </div>
+      ))}
       <div className="ml-3" onClick={() => selectReaction("")}>
         ❌
       </div>
