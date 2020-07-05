@@ -255,20 +255,40 @@ export default function GameScreen() {
     router.push(`/games/[gameId]`, `/games/${newGameRef.id}`);
   };
 
-  const Guess = ({ children, selectedRound, selectedPlayer, reactions }) => {
+  const Guess = ({
+    children,
+    selectedRound,
+    selectedPlayer,
+    reactions,
+    show,
+  }) => {
     return (
-      <div style={{ display: "flex" }}>
-        <div
-          className="px-2"
-          onClick={(event) =>
-            handleReaction(selectedRound, selectedPlayer, event)
-          }
-        >
-          {children}
-        </div>
-        <div>
-          <div>{reactions?.player1}</div>
-          <div>{reactions?.player2}</div>
+      <div className="relative">
+        {show && (
+          <div
+            className="absolute"
+            style={{ top: -30, left: selectedPlayer === "player1" ? 30 : -200 }}
+          >
+            <EmojiControl
+              onReactionSelected={handleReactionSelected}
+              selectedPlayer={reactionPosition.selectedPlayer}
+              selectedRound={reactionPosition.selectedRound}
+            ></EmojiControl>
+          </div>
+        )}
+        <div style={{ display: "flex" }}>
+          <div
+            className="px-2"
+            onClick={(event) =>
+              handleReaction(selectedRound, selectedPlayer, event)
+            }
+          >
+            {children}
+          </div>
+          <div>
+            <div>{reactions?.player1}</div>
+            <div>{reactions?.player2}</div>
+          </div>
         </div>
       </div>
     );
@@ -388,38 +408,24 @@ export default function GameScreen() {
                 className="flex justify-between mt-1 px-10 "
                 key={guess.round}
               >
-                {reactionPosition.show === `${guess.round}player1` ? (
-                  <EmojiControl
-                    onReactionSelected={handleReactionSelected}
-                    selectedPlayer={reactionPosition.selectedPlayer}
-                    selectedRound={reactionPosition.selectedRound}
-                  ></EmojiControl>
-                ) : (
-                  <Guess
-                    reactions={guess.reactions?.player1}
-                    selectedPlayer="player1"
-                    selectedRound={guess.round}
-                    reactionClicked={handleReactionSelected}
-                  >
-                    {guess.player1}
-                  </Guess>
-                )}
-                {reactionPosition.show === `${guess.round}player2` ? (
-                  <EmojiControl
-                    onReactionSelected={handleReactionSelected}
-                    selectedPlayer={reactionPosition.selectedPlayer}
-                    selectedRound={reactionPosition.selectedRound}
-                  ></EmojiControl>
-                ) : (
-                  <Guess
-                    reactions={guess.reactions?.player2}
-                    selectedPlayer="player2"
-                    selectedRound={guess.round}
-                    reactionClicked={handleReactionSelected}
-                  >
-                    {guess.player2}
-                  </Guess>
-                )}
+                <Guess
+                  show={reactionPosition.show === `${guess.round}player1`}
+                  reactions={guess.reactions?.player1}
+                  selectedPlayer="player1"
+                  selectedRound={guess.round}
+                  reactionClicked={handleReactionSelected}
+                >
+                  {guess.player1}
+                </Guess>
+                <Guess
+                  show={reactionPosition.show === `${guess.round}player2`}
+                  reactions={guess.reactions?.player2}
+                  selectedPlayer="player2"
+                  selectedRound={guess.round}
+                  reactionClicked={handleReactionSelected}
+                >
+                  {guess.player2}
+                </Guess>
               </div>
             ))}
           {!gameFinished && (
