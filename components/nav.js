@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../pages/_app";
 import { useRouter } from "next/router";
 
@@ -32,17 +32,27 @@ export default function Nav() {
               Mind Merge
             </button>
             {user ? (
-              <button
-                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
-                type="button"
-                onClick={() => setNavbarOpen(!navbarOpen)}
-              >
-                {navbarOpen ? (
-                  <FontAwesomeIcon size="sm" icon={faTimes} />
-                ) : (
-                  <FontAwesomeIcon size="sm" icon={faBars} />
+              <div className="flex">
+                {user.friendRequests.length > 0 && (
+                  <button
+                    onClick={() => handleRouteClick("/friendRequests")}
+                    className="md:invisible px-3 py-2 flex items-center text-md font-bold leading-snug text-white hover:opacity-75"
+                  >
+                    <FontAwesomeIcon size="sm" icon={faUserPlus} />
+                  </button>
                 )}
-              </button>
+                <button
+                  className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
+                  type="button"
+                  onClick={() => setNavbarOpen(!navbarOpen)}
+                >
+                  {navbarOpen ? (
+                    <FontAwesomeIcon size="sm" icon={faTimes} />
+                  ) : (
+                    <FontAwesomeIcon size="sm" icon={faBars} />
+                  )}
+                </button>
+              </div>
             ) : (
               <button
                 onClick={() => handleRouteClick("/login")}
@@ -62,6 +72,16 @@ export default function Nav() {
           >
             {user ? (
               <ul className="flex flex-col md:flex-row list-none md:ml-auto">
+                <li className="hidden md:block">
+                  {user.friendRequests.length > 0 && (
+                    <button
+                      onClick={() => handleRouteClick("/friendRequests")}
+                      className="px-3 py-2 h-full flex items-center text-md font-bold leading-snug text-white hover:opacity-75"
+                    >
+                      <FontAwesomeIcon size="sm" icon={faUserPlus} />
+                    </button>
+                  )}
+                </li>
                 <li className="nav-item">
                   <button
                     onClick={() => handleRouteClick("/rules")}
