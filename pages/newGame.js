@@ -10,7 +10,7 @@ export default function NewGame() {
   const router = useRouter();
 
   const startNewGame = async (friend) => {
-    const player1 = { userId: user.userId, name: user.name };
+    const player1 = { userId: user.userId, name: user.name, email: user.email };
     const player2 = { ...friend };
 
     const newGame = {
