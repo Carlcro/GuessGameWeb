@@ -122,15 +122,20 @@ export default function GameScreen() {
       { round: newRound, player1: "", player2: "" },
     ];
 
-    await firebase.firestore().collection("guessGames").doc(gameId).set(
-      {
-        guesses: guesses,
-        isFinished: true,
-        finishedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        round: newRound,
-      },
-      { merge: true }
-    );
+    if (round === 1) {
+      await firebase.firestore().collection("guessGames").doc(gameId).delete();
+      router.push(`/home`);
+    } else {
+      await firebase.firestore().collection("guessGames").doc(gameId).set(
+        {
+          guesses: guesses,
+          isFinished: true,
+          finishedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          round: newRound,
+        },
+        { merge: true }
+      );
+    }
   };
 
   const isSameWord = (currentGuesses) => {
@@ -170,13 +175,21 @@ export default function GameScreen() {
         .collection("guessGames")
         .doc(gameId)
         .onSnapshot((doc) => {
-          const { guesses, round, isFinished, players, newGameId } = doc.data();
-          setGuesses(guesses);
-          setRound(round);
-          setPlayers(players);
-          setGameFinished(isFinished);
-          setNewGameId(newGameId);
-          setGameInitialized(true);
+          if (doc.exists) {
+            const {
+              guesses,
+              round,
+              isFinished,
+              players,
+              newGameId,
+            } = doc.data();
+            setGuesses(guesses);
+            setRound(round);
+            setPlayers(players);
+            setGameFinished(isFinished);
+            setNewGameId(newGameId);
+            setGameInitialized(true);
+          }
         });
     }
   }, [gameId]);

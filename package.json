@@ -19,6 +19,7 @@
     "next-pwa": "^2.4.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "swr": "^0.2.3",
     "use-immer": "^0.4.0"
   },
   "devDependencies": {
