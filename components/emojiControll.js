@@ -1,6 +1,6 @@
 import React from "react";
 
-const emojis = ["👍", "😍", "😂", "😱", "😡", "💡", "🤔"];
+const emojis = ["👍", "😍", "😂", "😱", "😡", "💡", "🤔", "😢"];
 
 export default function EmojiControl({
   onReactionSelected,
