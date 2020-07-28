@@ -101,7 +101,7 @@ export default function Home() {
     return <div></div>;
   }
 
-  if (!user.emailVerified) {
+  /* if (!user.emailVerified) {
     return (
       <>
         <Head>
@@ -121,7 +121,7 @@ export default function Home() {
         </div>
       </>
     );
-  }
+  } */
 
   return (
     <div className="flex flex-col justify-between items-center py-8 flex-1">
