@@ -19,7 +19,11 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   function onAuthStateChanged(result) {
-    setAuthUser(result);
+    if (result) {
+      setAuthUser(result);
+    } else {
+      setAuthUser(false);
+    }
   }
 
   useEffect(() => {
@@ -77,7 +81,7 @@ function MyApp({ Component, pageProps }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{ authUser, user, logout }}>
       <div className="flex flex-col min-h-screen ">
         <Nav></Nav>
         <Component {...pageProps} />
