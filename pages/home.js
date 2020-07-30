@@ -5,7 +5,6 @@ import Link from "next/link";
 import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-import Button from "../components/button";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
