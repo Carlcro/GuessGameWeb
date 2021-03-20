@@ -28,20 +28,21 @@ function NewChatScreen() {
 
   return (
     <div>
-      {user.friends.map((friend) => (
-        <button
-          onClick={() => startNewChat(friend)}
-          className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-2 mt-3"
-          key={friend.userId}
-        >
-          <div className="flex">
-            <div className="flex flex-col flex-1">
-              <div className="text-white">{`${friend.name}`}</div>
-              <div className="text-xs">{`${friend.email || ""}`}</div>
+      {user &&
+        user.friends.map((friend) => (
+          <button
+            onClick={() => startNewChat(friend)}
+            className="w-48 bg-paragrah border-highlight border-2 border-solid rounded text-center p-2 mt-3"
+            key={friend.userId}
+          >
+            <div className="flex">
+              <div className="flex flex-col flex-1">
+                <div className="text-white">{`${friend.name}`}</div>
+                <div className="text-xs">{`${friend.email || ""}`}</div>
+              </div>
             </div>
-          </div>
-        </button>
-      ))}
+          </button>
+        ))}
     </div>
   );
 }
