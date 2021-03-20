@@ -9,6 +9,9 @@ html {
   background: #232946;
   font-family: "Jost", sans-serif;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 
 body {
   color: #b8c1ec;

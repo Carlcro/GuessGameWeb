@@ -1,6 +1,11 @@
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faTimes,
+  faUserPlus,
+  faComment,
+} from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../pages/_app";
 import { useRouter } from "next/router";
 
@@ -41,6 +46,12 @@ export default function Nav() {
                     <FontAwesomeIcon size="sm" icon={faUserPlus} />
                   </button>
                 )}
+                <button
+                  onClick={() => handleRouteClick("/chats")}
+                  className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
+                >
+                  <FontAwesomeIcon size="sm" icon={faComment} />
+                </button>
                 <button
                   className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
                   type="button"
@@ -123,6 +134,14 @@ export default function Nav() {
                     onClick={handleLogout}
                   >
                     Logout
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    onClick={() => handleRouteClick("/chats")}
+                    className="px-3 py-2 flex items-center text-md ml-2 font-bold leading-snug text-white hover:opacity-75"
+                  >
+                    <FontAwesomeIcon size="sm" icon={faComment} />
                   </button>
                 </li>
               </ul>

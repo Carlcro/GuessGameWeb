@@ -35,3 +35,8 @@ yarn.lock
 
 workbox*
 sw.js*
+
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules

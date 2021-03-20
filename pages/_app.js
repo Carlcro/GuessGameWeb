@@ -82,7 +82,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthContext.Provider value={{ authUser, user, logout }}>
-      <div className="flex flex-col min-h-screen ">
+      <div className="flex flex-col min-h-screen">
         <Nav></Nav>
         <Component {...pageProps} />
       </div>
