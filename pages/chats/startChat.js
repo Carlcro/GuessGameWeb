@@ -27,7 +27,7 @@ function NewChatScreen() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       {user &&
         user.friends.map((friend) => (
           <button
