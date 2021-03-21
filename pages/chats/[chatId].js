@@ -45,7 +45,7 @@ function ChatScreen() {
       .update({
         messages: firebase.firestore.FieldValue.arrayUnion({
           content: chatInput,
-          user,
+          userId: user.userId,
           sentAt: firebase.firestore.Timestamp.now(),
         }),
       });
@@ -63,10 +63,8 @@ function ChatScreen() {
         style={{ height: "65vh" }}
       >
         {chatData.map((message) => {
-          const side = isOwnMessage(message.user.userId)
-            ? "self-end"
-            : "self-start";
-          const bgColor = isOwnMessage(message.user.userId)
+          const side = isOwnMessage(message.userId) ? "self-end" : "self-start";
+          const bgColor = isOwnMessage(message.userId)
             ? "bg-paragraph"
             : "bg-button";
           return (
