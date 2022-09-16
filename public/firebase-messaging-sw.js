@@ -17,7 +17,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Retrieve firebase messaging
-const messaging = firebase.messaging();
+if (typeof window !== "undefined") {
+  const messaging = firebase.messaging();
+}
 
 messaging.onBackgroundMessage(function (payload) {
   console.log("Received background message ", payload);
@@ -26,8 +28,4 @@ messaging.onBackgroundMessage(function (payload) {
   const notificationOptions = {
     body: payload.notification.body,
   };
-
-  /*   if (window) {
-    self.registration.showNotification(notificationTitle, notificationOptions);
-  } */
 });

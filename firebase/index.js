@@ -16,16 +16,19 @@ const config = {
 };
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-  const messaging = firebase.messaging();
 
-  Notification.requestPermission()
-    .then((result) => {
-      console.log(result);
-      return messaging.getToken();
-    })
-    .then((token) => {
-      console.log("token", token);
-    });
+  if (typeof window !== "undefined") {
+    const messaging = firebase.messaging();
+
+    Notification.requestPermission()
+      .then((result) => {
+        console.log(result);
+        return messaging.getToken();
+      })
+      .then((token) => {
+        console.log("token", token);
+      });
+  }
 }
 const auth = firebase.auth();
 export { auth, firebase };
