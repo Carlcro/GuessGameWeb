@@ -27,7 +27,7 @@ messaging.onBackgroundMessage(function (payload) {
     body: payload.notification.body,
   };
 
-  if (window) {
+  /*   if (window) {
     self.registration.showNotification(notificationTitle, notificationOptions);
-  }
+  } */
 });
