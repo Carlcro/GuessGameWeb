@@ -97,7 +97,7 @@ export default function Home() {
   };
 
   if (!user) {
-    return <div></div>;
+    return <div>Hej</div>;
   }
 
   /* if (!user.emailVerified) {
